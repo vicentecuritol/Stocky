@@ -1,5 +1,7 @@
-package com.cavi.stocky.model
+package com.cavi.stocky.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
+@Entity
+@Table(name = "producto")
+
 public class Producto {
     private Long id;
     private String nombre;
