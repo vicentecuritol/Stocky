@@ -27,7 +27,7 @@ public class ProductoCreateRequest {
     private String categoriaNombre;
 
     @NotBlank(message= "El nombre del proveedor es obligatorio")
-    private String ProvveedorNombre;
+    private String ProveedorNombre;
 
     @NotBlank(message = "El email del proveedor es obligatorio")
     @Email(message = "El email del proveedor no es válido")
@@ -35,5 +35,3 @@ public class ProductoCreateRequest {
 }
 
 
-
-}

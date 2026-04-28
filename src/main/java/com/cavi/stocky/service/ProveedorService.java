@@ -10,29 +10,42 @@ import com.cavi.stocky.repository.ProveedorRepository;
 
 @Service
 public class ProveedorService {
+
     @Autowired
     private ProveedorRepository proveedorRepository;
 
-    public List<Proveedor> getProveedores(){
+    // para obtener todos los proveedores
+    public List<Proveedor> getProveedores() {
         return proveedorRepository.findAll();
     }
 
-    public Proveedor saveProveedores(Proveedor prov){
-        return proveedorRepository.save(prov);
-    }
-
-    public Proveedor getProveedorId (Long id){
+    // Obtener un proveedor a traves del id
+    public Proveedor getProveedorId(Long id) {
         return proveedorRepository.findById(id).orElse(null);
     }
 
-    public Proveedor updateProvedores(Proveedor prov){
-        if(!proveedorRepository.existsById(prov.getId())){
-            return null;
-        }
-        return proveedorRepository.save(prov);
+    // Guardar un nuevo proovedor en en la abase de datos
+    public Proveedor saveProveedor(Proveedor proveedor) {
+        return proveedorRepository.save(proveedor);
     }
 
-    public void deleteProveedor (Long id){
-        proveedorRepository.deleteById(id);
+    // Actualizar un proveedor registardo
+    public Proveedor updateProveedor(Proveedor proveedor) {
+        if (!proveedorRepository.existsById(proveedor.getId())) {
+            return null;
+        }
+        return proveedorRepository.save(proveedor);
+    }
+
+    // Eliminar un proveedo de los registrados
+    public void eliminarProveedor(Long id) {
+        if (proveedorRepository.existsById(id)) {
+            proveedorRepository.deleteById(id);
+        }
+    }
+
+    // Verificar si existe un proveedor
+    public boolean existeProveedor(Long id) {
+        return proveedorRepository.existsById(id);
     }
 }

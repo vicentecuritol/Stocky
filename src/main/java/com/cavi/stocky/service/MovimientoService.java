@@ -14,26 +14,39 @@ public class MovimientoService {
     @Autowired
     private MovimientoRepository movimientoRepository;
 
-    public List<Movimiento> getMovimietos(){
+    // Obtener todos los movimientos
+    public List<Movimiento> getMovimientos() {
         return movimientoRepository.findAll();
     }
 
-    public Movimiento saveMovimiento(Movimiento mov){
-        return movimientoRepository.save(mov);
-    }
-
-    public Movimiento getMovimientoId(Long id){
+    // Obtener un movimiento por ID
+    public Movimiento getMovimientoId(Long id) {
         return movimientoRepository.findById(id).orElse(null);
     }
 
-    public Movimiento updateMovimiento(Movimiento mov){
-        if(!movimientoRepository.existsById(mov.getId())){
-            return null;
-        }
-        return movimientoRepository.save(mov);
+    // Guardar un nuevo movimiento
+    public Movimiento saveMovimiento(Movimiento movimiento) {
+        return movimientoRepository.save(movimiento);
     }
 
-    public void eliminarMovimiento(Long id){
-        movimientoRepository.deleteById(id);
+    // Actualizar un movimiento
+    public Movimiento updateMovimiento(Movimiento movimiento) {
+        if (!movimientoRepository.existsById(movimiento.getId())) {
+            return null;
+        }
+        return movimientoRepository.save(movimiento);
+    }
+
+    // Eliminar un movimiento
+    public void eliminarMovimiento(Long id) {
+        if (movimientoRepository.existsById(id)) {
+            movimientoRepository.deleteById(id);
+        }
+    }
+
+    // Verificar si existe un movimiento
+    public boolean existeMovimiento(Long id) {
+        return movimientoRepository.existsById(id);
     }
 }
+

@@ -14,26 +14,30 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public List<Categoria> getCategorias(){
+    public List<Categoria> getCategorias() {
         return categoriaRepository.findAll();
     }
 
-    public Categoria saveCategoria(Categoria categoria){
+    public Categoria saveCategoria(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
 
-    public Categoria getCategoriaId(Long id){
+    public Categoria getCategoriaId(Long id) {
         return categoriaRepository.findById(id).orElse(null);
     }
 
-    public Categoria updateCategoria(Categoria categoria){
-        if(!categoriaRepository.existsById(categoria.getId())){
+    public Categoria updateCategoria(Categoria categoria) {
+        if (!categoriaRepository.existsById(categoria.getId())) {
             return null;
         }
         return categoriaRepository.save(categoria);
     }
 
-    public void eliminarCategoria(Long id){
+    public void eliminarCategoria(Long id) {
         categoriaRepository.deleteById(id);
+    }
+
+    public boolean existeCategoria(Long id) {
+        return categoriaRepository.existsById(id);
     }
 }
