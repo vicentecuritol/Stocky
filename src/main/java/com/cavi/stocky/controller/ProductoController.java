@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/productos")
@@ -19,57 +20,63 @@ public class ProductoController {
 
     //obtener todos los productos
     @GetMapping
-    public ResponseEntity<List<Producto>> obtenerTodos() {
-        return ResponseEntity.ok(productoService.geProductos());
+    public ResponseEntity<List<ProductoResponse>> obtenerTodos() {
+        List<Producto> productos = productoService.getProductos();
+        List<ProductoResponse> respuestas = productos.stream()
+                .map(this::convertirAResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(respuestas);
     }
 
     //obtener por id
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> obtenerPorId(@PathVariable long id) {
+    public ResponseEntity<ProductoResponse> obtenerPorId(@PathVariable Long id) {
         Producto producto = productoService.getProductoId(id);
-        return producto != null ? ResponseEntity.ok(producto) : ResponseEntity.notFound().build();
+        if (producto != null) {
+            return ResponseEntity.ok(convertirAResponse(producto));
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    //actualizar
+    //crear
     @PostMapping
-    public ResponseEntity<Producto> crear(@Valid @RequestBody Producto producto) {
+    public ResponseEntity<ProductoResponse> crear(@Valid @RequestBody Producto producto) {
         Producto nuevoProducto = productoService.saveProducto(producto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoProducto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevoProducto));
     }
 
     //actualizar
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> actualizar(@PathVariable long id, @Valid @RequestBody Producto producto) {
+    public ResponseEntity<ProductoResponse> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
         producto.setId(id);
         Producto actualizado = productoService.updateProducto(producto);
-        return actualizado != null ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
+        if (actualizado != null) {
+            return ResponseEntity.ok(convertirAResponse(actualizado));
+        }
+        return ResponseEntity.notFound().build();
     }
 
 
     //eliminar
     @DeleteMapping("/{id}")
-    public ResponseEntity<Producto> eliminar(@PathVariable long id) {
-        Producto producto = productoService.getProductoId(id);
-        if (producto != null) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        if (productoService.existeProducto(id)) {
             productoService.eliminarProducto(id);
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
 
 
     private ProductoResponse convertirAResponse(Producto producto) {
-        String categoriaNombre = producto.getCategoria() != null ? producto.getCategoria().getNombre() : "Sin categoría";
-        String proveedorNombre = producto.getProveedor() != null ? producto.getProveedor().getNombre() : "Sin proveedor";
-
         return new ProductoResponse(
                 producto.getId(),
                 producto.getNombre(),
                 producto.getPrecio(),
                 producto.getStockActual(),
                 producto.getStockMinimo(),
-                categoriaNombre,
-                proveedorNombre
+                producto.getCategoria() != null ? producto.getCategoria().getNombre() : null,
+                producto.getProveedor() != null ? producto.getProveedor().getNombre() : null
         );
     }
 }
