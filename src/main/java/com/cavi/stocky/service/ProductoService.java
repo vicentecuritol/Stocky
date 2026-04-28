@@ -13,7 +13,7 @@ public class ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    public List<Producto>geProductos(){
+    public List<Producto> getProductos(){
         return productoRepository.findAll();
     }
 
@@ -35,6 +35,8 @@ public class ProductoService {
     public void eliminarProducto(Long id){
         productoRepository.deleteById(id);
     }
+
+    public boolean existeProducto(Long id) {
+        return productoRepository.existsById(id);
+    }
 }
-
-
