@@ -35,11 +35,15 @@ public class Producto {
     @NotNull (message = "El stock minimo es obligatorio")
     @Min(value = 0, message = "El stock minimo no puede ser negativo")
     private Integer stockMinimo;
-    
+
     @ManyToOne
-    @JoinColumn (name = "categoria_id")
+    @JoinColumn (name = "categoria_id", nullable = false)
+    @NotNull(message = "La categoría es obligatoria")
     private Categoria categoria;
+
     @ManyToOne
-    @JoinColumn (name = "proveedor_id")
+    @JoinColumn (name = "proveedor_id", nullable = false)
+    @NotNull(message = "El proveedor es obligatorio")
     private Proveedor proveedor;
+
 }

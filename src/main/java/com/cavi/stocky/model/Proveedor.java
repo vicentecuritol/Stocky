@@ -21,10 +21,13 @@ public class Proveedor {
     @NotBlank(message = "El nombre del proveedor no puede estar vacío")
     private String nombre;
 
-    @NotBlank(message = "El teléfono no puede estar vacío")
-    private String telefono;
 
     @NotBlank(message = "El email no puede estar vacío")
     @Email(message = "El email no tiene un formato válido")
     private String email;
+
+    @NotBlank(message = "El teléfono no puede estar vacío")
+    private String telefono;
+
+
 }

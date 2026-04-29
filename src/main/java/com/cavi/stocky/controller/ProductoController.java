@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.cavi.stocky.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/api/v1/productos")
@@ -48,16 +49,28 @@ public class ProductoController {
     // Crear usando el DTO ProductoCreateRequest
     @PostMapping
     public ResponseEntity<ProductoResponse> crear(@Valid @RequestBody ProductoCreateRequest request) {
+
+        // Buscar y validar categoría
         Categoria categoria = categoriaService.getCategorias().stream()
                 .filter(c -> c.getNombre().equalsIgnoreCase(request.getCategoriaNombre()))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Categoría no encontrada: " + request.getCategoriaNombre()));
 
+        // Buscar y validar proveedor
         Proveedor proveedor = proveedorService.getProveedores().stream()
                 .filter(p -> p.getNombre().equalsIgnoreCase(request.getProveedorNombre()))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Proveedor no encontrado: " + request.getProveedorNombre()));
 
+        // Validar que el email coincida
+        if (!proveedor.getEmail().equalsIgnoreCase(request.getProveedorEmail())) {
+            throw new IllegalArgumentException(
+                    "El email del proveedor no coincide. email registrado: " + proveedor.getEmail());
+        }
+
+        // Crear el producto
         Producto producto = new Producto();
         producto.setNombre(request.getNombre());
         producto.setPrecio(request.getPrecio());
