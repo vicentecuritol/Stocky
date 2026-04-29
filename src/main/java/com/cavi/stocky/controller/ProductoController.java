@@ -1,8 +1,13 @@
 package com.cavi.stocky.controller;
 
+import com.cavi.stocky.dto.ProductoCreateRequest;
 import com.cavi.stocky.dto.ProductoResponse;
+import com.cavi.stocky.model.Categoria;
 import com.cavi.stocky.model.Producto;
+import com.cavi.stocky.model.Proveedor;
+import com.cavi.stocky.service.CategoriaService;
 import com.cavi.stocky.service.ProductoService;
+import com.cavi.stocky.service.ProveedorService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,8 +22,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ProductoController {
     private final ProductoService productoService;
+    private final CategoriaService categoriaService;
+    private final ProveedorService proveedorService;
 
-    //obtener todos los productos
+    // Obtener todos los productos
     @GetMapping
     public ResponseEntity<List<ProductoResponse>> obtenerTodos() {
         List<Producto> productos = productoService.getProductos();
@@ -28,7 +35,7 @@ public class ProductoController {
         return ResponseEntity.ok(respuestas);
     }
 
-    //obtener por id
+    // Obtener por id
     @GetMapping("/{id}")
     public ResponseEntity<ProductoResponse> obtenerPorId(@PathVariable Long id) {
         Producto producto = productoService.getProductoId(id);
@@ -38,14 +45,32 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
-    //crear
+    // Crear usando el DTO ProductoCreateRequest
     @PostMapping
-    public ResponseEntity<ProductoResponse> crear(@Valid @RequestBody Producto producto) {
+    public ResponseEntity<ProductoResponse> crear(@Valid @RequestBody ProductoCreateRequest request) {
+        Categoria categoria = categoriaService.getCategorias().stream()
+                .filter(c -> c.getNombre().equalsIgnoreCase(request.getCategoriaNombre()))
+                .findFirst()
+                .orElse(null);
+
+        Proveedor proveedor = proveedorService.getProveedores().stream()
+                .filter(p -> p.getNombre().equalsIgnoreCase(request.getProveedorNombre()))
+                .findFirst()
+                .orElse(null);
+
+        Producto producto = new Producto();
+        producto.setNombre(request.getNombre());
+        producto.setPrecio(request.getPrecio());
+        producto.setStockActual(request.getStockActual());
+        producto.setStockMinimo(request.getStockMinimo());
+        producto.setCategoria(categoria);
+        producto.setProveedor(proveedor);
+
         Producto nuevoProducto = productoService.saveProducto(producto);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevoProducto));
     }
 
-    //actualizar
+    // Actualizar
     @PutMapping("/{id}")
     public ResponseEntity<ProductoResponse> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
         producto.setId(id);
@@ -56,8 +81,7 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
-
-    //eliminar
+    // Eliminar
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         if (productoService.existeProducto(id)) {
@@ -67,6 +91,15 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
+    // Endpoint especial: productos con stock bajo
+    @GetMapping("/bajo-stock")
+    public ResponseEntity<List<ProductoResponse>> productosBajoStock() {
+        List<ProductoResponse> bajoStock = productoService.getProductos().stream()
+                .filter(p -> p.getStockActual() <= p.getStockMinimo())
+                .map(this::convertirAResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(bajoStock);
+    }
 
     private ProductoResponse convertirAResponse(Producto producto) {
         return new ProductoResponse(
@@ -80,3 +113,5 @@ public class ProductoController {
         );
     }
 }
+
+
