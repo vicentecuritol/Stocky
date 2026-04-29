@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProveedorResponse {
-    private long id;
+    private Long id;
     private String nombre;
     private String email;
     private String telefono;
