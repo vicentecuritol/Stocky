@@ -8,7 +8,7 @@ Proyecto academico desarrollado con **Java Spring Boot** para la asignatura Desa
 - Consultas sobre historial de movimientos
 
 ## Requisitos
-- **Java 17** o superior
+- **Java 21** o superior
 - **MySQL** corriendo en `Localhost:3306` (Ususario `root`, Contraceña `system`)
 - **IDE Recomendado:** Vs Code | IntelliJ IDEA | Eclipse
 
