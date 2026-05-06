@@ -20,6 +20,7 @@ import com.cavi.stocky.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/api/v1/productos")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @AllArgsConstructor
 public class ProductoController {
     private final ProductoService productoService;

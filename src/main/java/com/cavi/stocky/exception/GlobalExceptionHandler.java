@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-
-import com.cavi.stocky.dto.ApiError;
-
 import java.time.LocalDateTime;
 
 @ControllerAdvice
