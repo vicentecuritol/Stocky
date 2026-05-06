@@ -1,11 +1,13 @@
-package com.cavi.stocky.handler;
+package com.cavi.stocky.exception;
 
-import com.cavi.stocky.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+
+
+import com.cavi.stocky.dto.ApiError;
 
 import java.time.LocalDateTime;
 
@@ -13,11 +15,11 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleResourceNotFound(
+    public ResponseEntity<ApiError> handleResourceNotFound(
             ResourceNotFoundException ex,
             WebRequest request) {
 
-        ErrorResponse error = new ErrorResponse(
+        ApiError error = new ApiError(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "Recurso No Encontrado",
@@ -29,11 +31,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgument(
+    public ResponseEntity<ApiError> handleIllegalArgument(
             IllegalArgumentException ex,
             WebRequest request) {
 
-        ErrorResponse error = new ErrorResponse(
+        ApiError error = new ApiError(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 "Argumento Inválido",
@@ -45,11 +47,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGlobalException(
+    public ResponseEntity<ApiError> handleGlobalException(
             Exception ex,
             WebRequest request) {
 
-        ErrorResponse error = new ErrorResponse(
+        ApiError error = new ApiError(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Error Interno del Servidor",
