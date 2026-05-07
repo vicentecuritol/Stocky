@@ -1,6 +1,6 @@
 package com.cavi.stocky.controller;
 
-import com.cavi.stocky.dto.MovimientoResponse;
+import com.cavi.stocky.dto.MovimientoResponseDto;
 import com.cavi.stocky.model.Movimiento;
 import com.cavi.stocky.service.MovimientoService;
 import lombok.AllArgsConstructor;
@@ -21,9 +21,9 @@ public class MovimientoController {
 
     // Obtiene todos los moviminetps existentes
     @GetMapping
-    public ResponseEntity<List<MovimientoResponse>> obtenerTodos() {
+    public ResponseEntity<List<MovimientoResponseDto>> obtenerTodos() {
         List<Movimiento> movimientos = movimientoService.getMovimientos();
-        List<MovimientoResponse> respuestas = movimientos.stream()
+        List<MovimientoResponseDto> respuestas = movimientos.stream()
                 .map(this::convertirAResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(respuestas);
@@ -31,7 +31,7 @@ public class MovimientoController {
 
     // Obtiene un movimiento por id
     @GetMapping("/{id}")
-    public ResponseEntity<MovimientoResponse> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<MovimientoResponseDto> obtenerPorId(@PathVariable Long id) {
         Movimiento movimiento = movimientoService.getMovimientoId(id);
         if (movimiento != null) {
             return ResponseEntity.ok(convertirAResponse(movimiento));
@@ -41,14 +41,14 @@ public class MovimientoController {
 
     // Crea un nuevo movimiento
     @PostMapping
-    public ResponseEntity<MovimientoResponse> crear(@Valid @RequestBody Movimiento movimiento) {
+    public ResponseEntity<MovimientoResponseDto> crear(@Valid @RequestBody Movimiento movimiento) {
         Movimiento nuevo = movimientoService.saveMovimiento(movimiento);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
     }
 
     // Actualiza el movimiento
     @PutMapping("/{id}")
-    public ResponseEntity<MovimientoResponse> actualizar(@PathVariable Long id, @Valid @RequestBody Movimiento movimiento) {
+    public ResponseEntity<MovimientoResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Movimiento movimiento) {
         movimiento.setId(id);
         Movimiento actualizado = movimientoService.updateMovimiento(movimiento);
         if (actualizado != null) {
@@ -67,8 +67,8 @@ public class MovimientoController {
         return ResponseEntity.notFound().build();
     }
 
-    private MovimientoResponse convertirAResponse(Movimiento movimiento) {
-        return new MovimientoResponse(
+    private MovimientoResponseDto convertirAResponse(Movimiento movimiento) {
+        return new MovimientoResponseDto(
                 movimiento.getId(),
                 movimiento.getTipo(),
                 movimiento.getCantidad(),

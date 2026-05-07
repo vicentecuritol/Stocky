@@ -1,7 +1,7 @@
 package com.cavi.stocky.controller;
 
-import com.cavi.stocky.dto.ProductoCreateRequest;
-import com.cavi.stocky.dto.ProductoResponse;
+import com.cavi.stocky.dto.ProductoCreateRequestDto;
+import com.cavi.stocky.dto.ProductoResponseDto;
 import com.cavi.stocky.model.Categoria;
 import com.cavi.stocky.model.Producto;
 import com.cavi.stocky.model.Proveedor;
@@ -29,9 +29,9 @@ public class ProductoController {
 
     // Obtener todos los productos
     @GetMapping
-    public ResponseEntity<List<ProductoResponse>> obtenerTodos() {
+    public ResponseEntity<List<ProductoResponseDto>> obtenerTodos() {
         List<Producto> productos = productoService.getProductos();
-        List<ProductoResponse> respuestas = productos.stream()
+        List<ProductoResponseDto> respuestas = productos.stream()
                 .map(this::convertirAResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(respuestas);
@@ -39,7 +39,7 @@ public class ProductoController {
 
     // Obtener por id
     @GetMapping("/{id}")
-    public ResponseEntity<ProductoResponse> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<ProductoResponseDto> obtenerPorId(@PathVariable Long id) {
         Producto producto = productoService.getProductoId(id);
         if (producto != null) {
             return ResponseEntity.ok(convertirAResponse(producto));
@@ -49,7 +49,7 @@ public class ProductoController {
 
     // Crear usando el DTO ProductoCreateRequest
     @PostMapping
-    public ResponseEntity<ProductoResponse> crear(@Valid @RequestBody ProductoCreateRequest request) {
+    public ResponseEntity<ProductoResponseDto> crear(@Valid @RequestBody ProductoCreateRequestDto request) {
 
         // Buscar y validar categoría
         Categoria categoria = categoriaService.getCategorias().stream()
@@ -86,7 +86,7 @@ public class ProductoController {
 
     // Actualizar
     @PutMapping("/{id}")
-    public ResponseEntity<ProductoResponse> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
+    public ResponseEntity<ProductoResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
         producto.setId(id);
         Producto actualizado = productoService.updateProducto(producto);
         if (actualizado != null) {
@@ -107,16 +107,16 @@ public class ProductoController {
 
     // Endpoint especial: productos con stock bajo
     @GetMapping("/bajo-stock")
-    public ResponseEntity<List<ProductoResponse>> productosBajoStock() {
-        List<ProductoResponse> bajoStock = productoService.getProductos().stream()
+    public ResponseEntity<List<ProductoResponseDto>> productosBajoStock() {
+        List<ProductoResponseDto> bajoStock = productoService.getProductos().stream()
                 .filter(p -> p.getStockActual() <= p.getStockMinimo())
                 .map(this::convertirAResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(bajoStock);
     }
 
-    private ProductoResponse convertirAResponse(Producto producto) {
-        return new ProductoResponse(
+    private ProductoResponseDto convertirAResponse(Producto producto) {
+        return new ProductoResponseDto(
                 producto.getId(),
                 producto.getNombre(),
                 producto.getPrecio(),

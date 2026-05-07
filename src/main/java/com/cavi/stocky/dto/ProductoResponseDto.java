@@ -1,5 +1,7 @@
 package com.cavi.stocky.dto;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaResponse {
+public class ProductoResponseDto {
     private Long id;
     private String nombre;
-    private String descripcion;
+    private Integer precio;
+    private Integer stockActual;
+    private Integer stockMinimo;
+    private String categoriaNombre;
+    private String proveedorNombre;
 }

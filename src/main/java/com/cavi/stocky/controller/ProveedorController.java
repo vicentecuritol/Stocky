@@ -1,6 +1,6 @@
 package com.cavi.stocky.controller;
 
-import com.cavi.stocky.dto.ProveedorResponse;
+import com.cavi.stocky.dto.ProveedorResponseDto;
 import com.cavi.stocky.model.Proveedor;
 import com.cavi.stocky.service.ProveedorService;
 import lombok.AllArgsConstructor;
@@ -21,9 +21,9 @@ public class ProveedorController {
 
     // Obtiene todos los proveedores registrados
     @GetMapping
-    public ResponseEntity<List<ProveedorResponse>> obtenerTodos() {
+    public ResponseEntity<List<ProveedorResponseDto>> obtenerTodos() {
         List<Proveedor> proveedores = proveedorService.getProveedores();
-        List<ProveedorResponse> respuestas = proveedores.stream()
+        List<ProveedorResponseDto> respuestas = proveedores.stream()
                 .map(this::convertirAResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(respuestas);
@@ -31,7 +31,7 @@ public class ProveedorController {
 
     // Obtener un proovedor por id
     @GetMapping("/{id}")
-    public ResponseEntity<ProveedorResponse> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<ProveedorResponseDto> obtenerPorId(@PathVariable Long id) {
         Proveedor proveedor = proveedorService.getProveedorId(id);
         if (proveedor != null) {
             return ResponseEntity.ok(convertirAResponse(proveedor));
@@ -41,14 +41,14 @@ public class ProveedorController {
 
     // Añadir un nuevo proveedor
     @PostMapping
-    public ResponseEntity<ProveedorResponse> crear(@Valid @RequestBody Proveedor proveedor) {
+    public ResponseEntity<ProveedorResponseDto> crear(@Valid @RequestBody Proveedor proveedor) {
         Proveedor nuevo = proveedorService.saveProveedor(proveedor);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
     }
 
     // para actualizar nuestro proovedor
     @PutMapping("/{id}")
-    public ResponseEntity<ProveedorResponse> actualizar(@PathVariable Long id, @Valid @RequestBody Proveedor proveedor) {
+    public ResponseEntity<ProveedorResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Proveedor proveedor) {
         proveedor.setId(id);
         Proveedor actualizado = proveedorService.updateProveedor(proveedor);
         if (actualizado != null) {
@@ -67,8 +67,8 @@ public class ProveedorController {
         return ResponseEntity.notFound().build();
     }
 
-    private ProveedorResponse convertirAResponse(Proveedor proveedor) {
-        return new ProveedorResponse(
+    private ProveedorResponseDto convertirAResponse(Proveedor proveedor) {
+        return new ProveedorResponseDto(
                 proveedor.getId(),
                 proveedor.getNombre(),
                 proveedor.getEmail(),

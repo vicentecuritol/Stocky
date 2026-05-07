@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovimientoResponse {
+public class MovimientoResponseDto {
     private Long id;
     private String tipo;
     private Integer cantidad;
