@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 public class Producto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "producto_seq")
-    @SequenceGenerator(name = "producto_seq", sequenceName = "SEQ_PRODUCTOS", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     
     private Long id;
 

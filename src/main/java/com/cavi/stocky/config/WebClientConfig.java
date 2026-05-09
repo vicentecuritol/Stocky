@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
-    @Configuration
+@Configuration
 public class WebClientConfig {
-
 
     @Value("${openmeteo.base-url}")
     private String openMeteoBaseUrl;
