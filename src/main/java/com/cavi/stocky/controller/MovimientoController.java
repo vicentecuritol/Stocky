@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+// controller de movimiento, maneja el historial de entradas y salidas de stock
 @RestController
 @RequestMapping("/api/v1/movimientos")
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class MovimientoController {
 
     private final MovimientoService movimientoService;
 
-    // Obtiene todos los moviminetps existentes
+    // GET /api/v1/movimientos - trae todo el historial
     @GetMapping
     public ResponseEntity<List<MovimientoResponseDto>> obtenerTodos() {
         List<Movimiento> movimientos = movimientoService.getMovimientos();
@@ -29,7 +29,7 @@ public class MovimientoController {
         return ResponseEntity.ok(respuestas);
     }
 
-    // Obtiene un movimiento por id
+    // GET /api/v1/movimientos/{id} - busca un movimiento por id
     @GetMapping("/{id}")
     public ResponseEntity<MovimientoResponseDto> obtenerPorId(@PathVariable Long id) {
         Movimiento movimiento = movimientoService.getMovimientoId(id);
@@ -39,14 +39,14 @@ public class MovimientoController {
         return ResponseEntity.notFound().build();
     }
 
-    // Crea un nuevo movimiento
+    // POST /api/v1/movimientos - registra una entrada o salida de stock
     @PostMapping
     public ResponseEntity<MovimientoResponseDto> crear(@Valid @RequestBody Movimiento movimiento) {
         Movimiento nuevo = movimientoService.saveMovimiento(movimiento);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
     }
 
-    // Actualiza el movimiento
+    // PUT /api/v1/movimientos/{id} - actualiza un movimiento existente
     @PutMapping("/{id}")
     public ResponseEntity<MovimientoResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Movimiento movimiento) {
         movimiento.setId(id);
@@ -57,7 +57,7 @@ public class MovimientoController {
         return ResponseEntity.notFound().build();
     }
 
-    // Elimina el movimiento
+    // DELETE /api/v1/movimientos/{id} - elimina un movimiento del historial
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         if (movimientoService.existeMovimiento(id)) {
@@ -67,6 +67,7 @@ public class MovimientoController {
         return ResponseEntity.notFound().build();
     }
 
+    // convierte Movimiento al DTO, muestra el nombre del producto en vez del objeto completo
     private MovimientoResponseDto convertirAResponse(Movimiento movimiento) {
         return new MovimientoResponseDto(
                 movimiento.getId(),

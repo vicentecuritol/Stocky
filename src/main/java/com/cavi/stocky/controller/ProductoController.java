@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.cavi.stocky.exception.ResourceNotFoundException;
-
+// controller de producto, el mas completo porque necesita categoria y proveedor al crear
 @RestController
 @RequestMapping("/api/v1/productos")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)// permite llamadas desde cualquier origen, util para el frontend
 @AllArgsConstructor
 public class ProductoController {
     private final ProductoService productoService;
-    private final CategoriaService categoriaService;
-    private final ProveedorService proveedorService;
+    private final CategoriaService categoriaService;  // para buscar la categoria al crear producto
+    private final ProveedorService proveedorService;  // para buscar el proveedor al crear producto
 
-    // Obtener todos los productos
+    // GET /api/v1/productos - trae todos los productos
     @GetMapping
     public ResponseEntity<List<ProductoResponseDto>> obtenerTodos() {
         List<Producto> productos = productoService.getProductos();
@@ -37,7 +37,7 @@ public class ProductoController {
         return ResponseEntity.ok(respuestas);
     }
 
-    // Obtener por id
+    // GET /api/v1/productos/{id} - busca un producto por id
     @GetMapping("/{id}")
     public ResponseEntity<ProductoResponseDto> obtenerPorId(@PathVariable Long id) {
         Producto producto = productoService.getProductoId(id);
@@ -47,31 +47,31 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
-    // Crear usando el DTO ProductoCreateRequest
+    // POST /api/v1/productos - crea un producto nuevo
+    // recibe ProductoCreateRequestDto en vez del modelo directo para mayor control
     @PostMapping
     public ResponseEntity<ProductoResponseDto> crear(@Valid @RequestBody ProductoCreateRequestDto request) {
-
-        // Buscar y validar categoría
+        // buscamos la categoria por nombre entre las registradas, si no existe lanza excepcion
         Categoria categoria = categoriaService.getCategorias().stream()
                 .filter(c -> c.getNombre().equalsIgnoreCase(request.getCategoriaNombre()))
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Categoría no encontrada: " + request.getCategoriaNombre()));
 
-        // Buscar y validar proveedor
+        // buscamos el proveedor por nombre, si no existe lanza excepcion
         Proveedor proveedor = proveedorService.getProveedores().stream()
                 .filter(p -> p.getNombre().equalsIgnoreCase(request.getProveedorNombre()))
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Proveedor no encontrado: " + request.getProveedorNombre()));
 
-        // Validar que el email coincida
+        // verificamos que el email que mando el cliente coincida con el del proveedor registrado
         if (!proveedor.getEmail().equalsIgnoreCase(request.getProveedorEmail())) {
             throw new IllegalArgumentException(
                     "El email del proveedor no coincide. email registrado: " + proveedor.getEmail());
         }
 
-        // Crear el producto
+        // construimos el objeto producto con todos los datos
         Producto producto = new Producto();
         producto.setNombre(request.getNombre());
         producto.setPrecio(request.getPrecio());
@@ -84,7 +84,7 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevoProducto));
     }
 
-    // Actualizar
+    // PUT /api/v1/productos/{id} - actualiza un producto existente
     @PutMapping("/{id}")
     public ResponseEntity<ProductoResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
         producto.setId(id);
@@ -95,7 +95,7 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
-    // Eliminar
+    // DELETE /api/v1/productos/{id} - elimina un producto
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         if (productoService.existeProducto(id)) {
@@ -105,7 +105,8 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
-    // Endpoint especial: productos con stock bajo
+    // GET /api/v1/productos/bajo-stock - productos que necesitan reabastecimiento
+    // retorna los que tienen stockActual menor o igual al stockMinimo
     @GetMapping("/bajo-stock")
     public ResponseEntity<List<ProductoResponseDto>> productosBajoStock() {
         List<ProductoResponseDto> bajoStock = productoService.getProductos().stream()
@@ -115,6 +116,7 @@ public class ProductoController {
         return ResponseEntity.ok(bajoStock);
     }
 
+    // convierte Producto al DTO, muestra nombres de categoria y proveedor en vez de objetos completos
     private ProductoResponseDto convertirAResponse(Producto producto) {
         return new ProductoResponseDto(
                 producto.getId(),

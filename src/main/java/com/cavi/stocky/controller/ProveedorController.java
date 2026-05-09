@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+// controller de proveedor, mismo patron que CategoriaController
 @RestController
 @RequestMapping("/api/v1/proveedores")
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class ProveedorController {
 
     private final ProveedorService proveedorService;
 
-    // Obtiene todos los proveedores registrados
+    // GET /api/v1/proveedores - trae todos los proveedores
     @GetMapping
     public ResponseEntity<List<ProveedorResponseDto>> obtenerTodos() {
         List<Proveedor> proveedores = proveedorService.getProveedores();
@@ -29,7 +29,7 @@ public class ProveedorController {
         return ResponseEntity.ok(respuestas);
     }
 
-    // Obtener un proovedor por id
+    // GET /api/v1/proveedores/{id} - busca un proveedor por id
     @GetMapping("/{id}")
     public ResponseEntity<ProveedorResponseDto> obtenerPorId(@PathVariable Long id) {
         Proveedor proveedor = proveedorService.getProveedorId(id);
@@ -39,14 +39,14 @@ public class ProveedorController {
         return ResponseEntity.notFound().build();
     }
 
-    // Añadir un nuevo proveedor
+    // POST /api/v1/proveedores - crea un proveedor nuevo
     @PostMapping
     public ResponseEntity<ProveedorResponseDto> crear(@Valid @RequestBody Proveedor proveedor) {
         Proveedor nuevo = proveedorService.saveProveedor(proveedor);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
     }
 
-    // para actualizar nuestro proovedor
+    // PUT /api/v1/proveedores/{id} - actualiza un proveedor existente
     @PutMapping("/{id}")
     public ResponseEntity<ProveedorResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Proveedor proveedor) {
         proveedor.setId(id);
@@ -57,7 +57,7 @@ public class ProveedorController {
         return ResponseEntity.notFound().build();
     }
 
-    // Elimina el proveedor
+    // DELETE /api/v1/proveedores/{id} - elimina un proveedor
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         if (proveedorService.existeProveedor(id)) {
@@ -67,6 +67,7 @@ public class ProveedorController {
         return ResponseEntity.notFound().build();
     }
 
+    // convierte Proveedor al DTO de respuesta
     private ProveedorResponseDto convertirAResponse(Proveedor proveedor) {
         return new ProveedorResponseDto(
                 proveedor.getId(),
