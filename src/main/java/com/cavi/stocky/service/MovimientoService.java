@@ -8,28 +8,29 @@ import org.springframework.stereotype.Service;
 import com.cavi.stocky.model.Movimiento;
 import com.cavi.stocky.repository.MovimientoRepository;
 
+// logica de negocio de movimiento, registra entradas y salidas de stock
 @Service
 public class MovimientoService {
 
     @Autowired
     private MovimientoRepository movimientoRepository;
 
-    // Obtener todos los movimientos
+    // retorna todo el historial de movimientos
     public List<Movimiento> getMovimientos() {
         return movimientoRepository.findAll();
     }
 
-    // Obtener un movimiento por ID
+    // busca un movimiento por id, devuelve null si no existe
     public Movimiento getMovimientoId(Long id) {
         return movimientoRepository.findById(id).orElse(null);
     }
 
-    // Guardar un nuevo movimiento
+    // guarda un movimiento nuevo en el historial
     public Movimiento saveMovimiento(Movimiento movimiento) {
         return movimientoRepository.save(movimiento);
     }
 
-    // Actualizar un movimiento
+    // actualiza un movimiento existente, verifica que exista antes de guardar
     public Movimiento updateMovimiento(Movimiento movimiento) {
         if (!movimientoRepository.existsById(movimiento.getId())) {
             return null;
@@ -37,14 +38,14 @@ public class MovimientoService {
         return movimientoRepository.save(movimiento);
     }
 
-    // Eliminar un movimiento
+    // elimina un movimiento si existe
     public void eliminarMovimiento(Long id) {
         if (movimientoRepository.existsById(id)) {
             movimientoRepository.deleteById(id);
         }
     }
 
-    // Verificar si existe un movimiento
+    // Verificar si existe un movimiento con ese id
     public boolean existeMovimiento(Long id) {
         return movimientoRepository.existsById(id);
     }

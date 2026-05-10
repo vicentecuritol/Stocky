@@ -8,35 +8,43 @@ import org.springframework.stereotype.Service;
 import com.cavi.stocky.model.Categoria;
 import com.cavi.stocky.repository.CategoriaRepository;
 
-@Service
+// logica de negocio de categoria
+// el controller recibe la peticion HTTP y nos la pasa, nosotros hacemos el trabajo
+@Service // indica que esta clase es un componente de logica de negocio
 public class CategoriaService {
 
-    @Autowired
+    @Autowired // spring inyecta el repositorio automaticamente, no necesitamos hacer new
     private CategoriaRepository categoriaRepository;
 
+    // retorna todas las categorias, si no hay ninguna devuelve lista vacia
     public List<Categoria> getCategorias() {
         return categoriaRepository.findAll();
     }
 
+    // guarda una categoria nueva y la retorna con el id asignado por la BD
     public Categoria saveCategoria(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
 
+    // busca por id, si no existe devuelve null
     public Categoria getCategoriaId(Long id) {
-        return categoriaRepository.findById(id).orElse(null);
+        return categoriaRepository.findById(id).orElse(null);// orElse(null) convierte el Optional a null si no hay resultado
     }
 
+    // actualiza una categoria, verifica que exista antes de guardar
     public Categoria updateCategoria(Categoria categoria) {
         if (!categoriaRepository.existsById(categoria.getId())) {
-            return null;
+            return null;// si no existe devolvemos null y el controller responde 404
         }
-        return categoriaRepository.save(categoria);
+        return categoriaRepository.save(categoria); // save tambien sirve para actualizar si el id ya existe
     }
 
+    // elimina la categoria con ese id
     public void eliminarCategoria(Long id) {
         categoriaRepository.deleteById(id);
     }
 
+    // verifica si existe una categoria con ese id, lo usamos antes de eliminar
     public boolean existeCategoria(Long id) {
         return categoriaRepository.existsById(id);
     }
