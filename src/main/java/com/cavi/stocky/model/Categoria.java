@@ -4,21 +4,21 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "categoria")
+// representa la tabla categoria en la base de datos
+@Data // lombok genera getters, setters, toString y equals automaticamente
+@NoArgsConstructor // genera constructor vacio, necesario para que JPA funcione
+@AllArgsConstructor // genera constructor con todos los campos
+@Entity // le dice a JPA que esta clase es una tabla en la BD
+@Table(name = "categoria") // nombre exacto de la tabla en MySQL
 public class Categoria {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // esta campo es la llave primaria de la tabla
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // el id se genera automatico (1, 2, 3...)
     private Long id;
 
     @NotBlank(message = "El nombre de la categoría no puede estar vacío")
     private String nombre;
 
 
-    private String descripcion; //opcional
+    private String descripcion; // campo opcional, puede venir vacio
 }

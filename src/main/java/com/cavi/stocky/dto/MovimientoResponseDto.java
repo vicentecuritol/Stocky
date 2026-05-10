@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
+// DTO de respuesta para movimiento
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +15,5 @@ public class MovimientoResponseDto {
     private Integer cantidad;
     private LocalDateTime fecha;
     private String observacion;
-    private String productoNombre;
+    private String productoNombre; // solo el nombre del producto, no el objeto completo
 }

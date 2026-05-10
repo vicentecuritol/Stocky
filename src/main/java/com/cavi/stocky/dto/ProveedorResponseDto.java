@@ -3,7 +3,7 @@ package com.cavi.stocky.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+// DTO de respuesta para proveedor
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
