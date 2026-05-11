@@ -2,6 +2,7 @@ package com.cavi.stocky.service;
 
 import java.util.List;
 
+import com.cavi.stocky.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,12 @@ public class ProveedorService {
         return proveedorRepository.findAll();
     }
 
-    // busca un proveedor por id, devuelve null si no existe
+    // busca un proveedor por id, devuelve proveedor no encotrado con id cuando no se encuentra un id del proveedor
     public Proveedor getProveedorId(Long id) {
-        return proveedorRepository.findById(id).orElse(null);
+        return proveedorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado con id: " +id));
     }
+
 
     // Guardar un nuevo proovedor en en la base de datos
     public Proveedor saveProveedor(Proveedor proveedor) {

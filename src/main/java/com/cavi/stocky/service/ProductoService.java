@@ -2,6 +2,7 @@ package com.cavi.stocky.service;
 
 import java.util.List;
 
+import com.cavi.stocky.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,10 @@ public class ProductoService {
         return productoRepository.save(pro);
     }
 
-    // busca un producto por id, devuelve null si no existe
+    // busca un producto por id, devuelve que el producto no fue encontrado llamando a ResourceNotFoundException
     public Producto getProductoId(Long id){
-        return productoRepository.findById(id).orElse(null);
+        return productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
     }
 
     // actualiza un producto existente, verifica que exista antes de guardar

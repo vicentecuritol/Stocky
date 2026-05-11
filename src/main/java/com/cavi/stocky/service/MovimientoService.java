@@ -2,6 +2,7 @@ package com.cavi.stocky.service;
 
 import java.util.List;
 
+import com.cavi.stocky.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,10 @@ public class MovimientoService {
         return movimientoRepository.findAll();
     }
 
-    // busca un movimiento por id, devuelve null si no existe
+    // busca un movimiento por id, devuelve un manejo desde Resource cuando no se encuentra un movimiento
     public Movimiento getMovimientoId(Long id) {
-        return movimientoRepository.findById(id).orElse(null);
+        return movimientoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Movimiento no encontrado con id: "+ id));
     }
 
     // guarda un movimiento nuevo en el historial

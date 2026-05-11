@@ -2,6 +2,7 @@ package com.cavi.stocky.service;
 
 import java.util.List;
 
+import com.cavi.stocky.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,10 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    // busca por id, si no existe devuelve null
+    // busca por id, donde si no se encuentra la categoria se va con la excepcion ResourseNotFounfException
     public Categoria getCategoriaId(Long id) {
-        return categoriaRepository.findById(id).orElse(null);// orElse(null) convierte el Optional a null si no hay resultado
+        return categoriaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: "+ id));
     }
 
     // actualiza una categoria, verifica que exista antes de guardar
