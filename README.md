@@ -10,22 +10,30 @@ Proyecto academico desarrollado con **Java Spring Boot** para la asignatura Desa
 
 ## Requisitos
 - **Java 21** o superior
-- **Oracle SQL developer**
+- **Laragon**
+- **HadiSQL**
 - **IDE Recomendado:** Vs Code | IntelliJ IDEA Eclipse 
 
 ## Cómo Ejecutar
-### 1) Mediante Powershell / CMD de Windows en carpeta raiz de stocky
+### 1) Encerder **Laragon**
+Levantar servicio de **Apache** y **MySQL**
+### 2) Ejecutar programa
+- Mediante Powershell / CMD de Windows en carpeta raiz de stocky
 ```bash
     .\mvnw.cmd spring-boot:run
 ```
-### 2) Abrir SQL developer y crar una nueva conexión
-- USER
+- O ejecutar directamente de un IDE en:
 ```
-ADMIN
+src/main/java/com/cavi/stocky/StockyApplication.java
+``` 
+### 3) En la ventana emergente de **HadiSQL** ingresar como:
+#### Usuario:
 ```
-- CONTRASEÑA
+root 
 ```
-14A8agua4
+#### Contraseña
+```
+System 
 ```
 
 ## Autores
