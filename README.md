@@ -40,11 +40,11 @@ root
 ```
 #### Contraseña
 ```
-System 
+system 
 ```
 ### 5) Crear una nueva Base de datos
 ```sql
-CREATE TABLE DATABASE stocky_db;
+CREATE DATABASE stocky_db;
 ```
 `Las tablas son construidas automaticamente`
 

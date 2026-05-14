@@ -12,6 +12,19 @@ import java.time.LocalDateTime;
 @ControllerAdvice // intercepta las excepciones que escapan de los controllers
 public class GlobalExceptionHandler {
 
+        //Respuesta a NoContentException, 204 
+        @ExceptionHandler(NoContentException.class)
+        public ResponseEntity<ApiError> handleNoContent(NoContentException ex,WebRequest request){
+                        ApiError error = new ApiError(
+                                LocalDateTime.now(),
+                                HttpStatus.NO_CONTENT.value(),
+                                "Sin Contenido",
+                                ex.getMessage(),
+                                request.getDescription(false).replace("uri=", "")
+                );
+                return new ResponseEntity<>(error, HttpStatus.NO_CONTENT);
+        }
+   
     // se activa cuando lanzamos ResourceNotFoundException, responde 404
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleResourceNotFound(
@@ -60,7 +73,7 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 request.getDescription(false).replace("uri=", "")
         );
-
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

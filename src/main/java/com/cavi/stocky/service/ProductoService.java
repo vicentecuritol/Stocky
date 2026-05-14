@@ -2,6 +2,7 @@ package com.cavi.stocky.service;
 
 import java.util.List;
 
+import com.cavi.stocky.exception.NoContentException;
 import com.cavi.stocky.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class ProductoService {
         productoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id" + id));
         productoRepository.deleteById(id); 
+        throw new NoContentException("Producto eliminado");
     }
 
     // retorna productos
