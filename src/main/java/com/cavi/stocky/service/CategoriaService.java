@@ -46,7 +46,6 @@ public class CategoriaService {
         categoriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: "+ id));
         categoriaRepository.deleteById(id);
-        throw new NoContentException("Categoria eliminada");
         }
         
     }

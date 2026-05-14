@@ -43,7 +43,6 @@ public class ProductoService {
         productoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id" + id));
         productoRepository.deleteById(id); 
-        throw new NoContentException("Producto eliminado");
     }
 
     // retorna productos
