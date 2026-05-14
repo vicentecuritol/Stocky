@@ -32,39 +32,28 @@ public class MovimientoController {
     // GET /api/v1/movimientos/{id} - busca un movimiento por id
     @GetMapping("/{id}")
     public ResponseEntity<MovimientoResponseDto> obtenerPorId(@PathVariable Long id) {
-        Movimiento movimiento = movimientoService.getMovimientoId(id);
-        if (movimiento != null) {
-            return ResponseEntity.ok(convertirAResponse(movimiento));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(convertirAResponse(movimientoService.getMovimientoId(id)));
     }
 
     // POST /api/v1/movimientos - registra una entrada o salida de stock
     @PostMapping
     public ResponseEntity<MovimientoResponseDto> crear(@Valid @RequestBody Movimiento movimiento) {
         Movimiento nuevo = movimientoService.saveMovimiento(movimiento);
-        return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));    
     }
 
     // PUT /api/v1/movimientos/{id} - actualiza un movimiento existente
     @PutMapping("/{id}")
     public ResponseEntity<MovimientoResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Movimiento movimiento) {
         movimiento.setId(id);
-        Movimiento actualizado = movimientoService.updateMovimiento(movimiento);
-        if (actualizado != null) {
-            return ResponseEntity.ok(convertirAResponse(actualizado));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(convertirAResponse(movimientoService.updateMovimiento(movimiento)));
     }
 
     // DELETE /api/v1/movimientos/{id} - elimina un movimiento del historial
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        if (movimientoService.existeMovimiento(id)) {
-            movimientoService.eliminarMovimiento(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        movimientoService.eliminarMovimiento(id);
+        return ResponseEntity.noContent().build();
     }
 
     // convierte Movimiento al DTO, muestra el nombre del producto en vez del objeto completo

@@ -1,7 +1,6 @@
 package com.cavi.stocky.dto;
 
 import lombok.Data;
-import java.util.List;
 
 // DTO que mapea la respuesta JSON que devuelve la API de Open Meteo
 // la API devuelve los datos en este formato:

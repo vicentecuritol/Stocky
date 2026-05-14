@@ -32,11 +32,7 @@ public class ProveedorController {
     // GET /api/v1/proveedores/{id} - busca un proveedor por id
     @GetMapping("/{id}")
     public ResponseEntity<ProveedorResponseDto> obtenerPorId(@PathVariable Long id) {
-        Proveedor proveedor = proveedorService.getProveedorId(id);
-        if (proveedor != null) {
-            return ResponseEntity.ok(convertirAResponse(proveedor));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(convertirAResponse(proveedorService.getProveedorId(id)));
     }
 
     // POST /api/v1/proveedores - crea un proveedor nuevo
@@ -50,21 +46,14 @@ public class ProveedorController {
     @PutMapping("/{id}")
     public ResponseEntity<ProveedorResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Proveedor proveedor) {
         proveedor.setId(id);
-        Proveedor actualizado = proveedorService.updateProveedor(proveedor);
-        if (actualizado != null) {
-            return ResponseEntity.ok(convertirAResponse(actualizado));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(convertirAResponse(proveedorService.updateProveedor(proveedor)));
     }
 
     // DELETE /api/v1/proveedores/{id} - elimina un proveedor
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        if (proveedorService.existeProveedor(id)) {
-            proveedorService.eliminarProveedor(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        proveedorService.eliminarProveedor(id);
+        return ResponseEntity.noContent().build();
     }
 
     // convierte Proveedor al DTO de respuesta

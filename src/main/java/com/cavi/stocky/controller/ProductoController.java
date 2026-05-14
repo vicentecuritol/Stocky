@@ -40,11 +40,7 @@ public class ProductoController {
     // GET /api/v1/productos/{id} - busca un producto por id
     @GetMapping("/{id}")
     public ResponseEntity<ProductoResponseDto> obtenerPorId(@PathVariable Long id) {
-        Producto producto = productoService.getProductoId(id);
-        if (producto != null) {
-            return ResponseEntity.ok(convertirAResponse(producto));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(convertirAResponse(productoService.getProductoId(id)));
     }
 
     // POST /api/v1/productos - crea un producto nuevo
@@ -88,21 +84,14 @@ public class ProductoController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductoResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
         producto.setId(id);
-        Producto actualizado = productoService.updateProducto(producto);
-        if (actualizado != null) {
-            return ResponseEntity.ok(convertirAResponse(actualizado));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(convertirAResponse(productoService.updateProducto(producto)));
     }
 
     // DELETE /api/v1/productos/{id} - elimina un producto
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        if (productoService.existeProducto(id)) {
-            productoService.eliminarProducto(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        productoService.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
     }
 
     // GET /api/v1/productos/bajo-stock - productos que necesitan reabastecimiento
@@ -110,7 +99,6 @@ public class ProductoController {
     @GetMapping("/bajo-stock")
     public ResponseEntity<List<ProductoResponseDto>> productosBajoStock() {
         List<ProductoResponseDto> bajoStock = productoService.getProductos().stream()
-                .filter(p -> p.getStockActual() <= p.getStockMinimo())
                 .map(this::convertirAResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(bajoStock);

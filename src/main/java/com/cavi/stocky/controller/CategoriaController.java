@@ -35,11 +35,8 @@ public class CategoriaController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaResponseDto> obtenerPorId(@PathVariable Long id) {
         // @PathVariable captura el {id} de la URL y lo convierte al parametro
-        Categoria categoria = categoriaService.getCategoriaId(id);
-        if (categoria != null) {
-            return ResponseEntity.ok(convertirAResponse(categoria));
-        }
-        return ResponseEntity.notFound().build();// responde 404 si no existe
+        // el service lanza ResourceNotFoundException si no existe, el globalExceptHandler responde 404
+        return ResponseEntity.ok(convertirAResponse(categoriaService.getCategoriaId(id)));// responde 404 si no existe
     }
 
     // POST /api/v1/categorias - crea una categoria nueva
@@ -54,22 +51,15 @@ public class CategoriaController {
     // PUT /api/v1/categorias/{id} - actualiza una categoria existente
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Categoria categoria) {
-        categoria.setId(id); // asignamos el id de la URL para que el service sepa cual actualizar
-        Categoria actualizada = categoriaService.updateCategoria(categoria);
-        if (actualizada != null) {
-            return ResponseEntity.ok(convertirAResponse(actualizada));
-        }
-        return ResponseEntity.notFound().build();
+        categoria.setId(id);
+        return ResponseEntity.ok(convertirAResponse(categoriaService.updateCategoria(categoria)));
     }
 
     // DELETE /api/v1/categorias/{id} - elimina una categoria
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        if (categoriaService.existeCategoria(id)) {
-            categoriaService.eliminarCategoria(id);
-            return ResponseEntity.noContent().build(); // responde 204, eliminado sin contenido
-        }
-        return ResponseEntity.notFound().build();
+        categoriaService.eliminarCategoria(id);
+        return ResponseEntity.noContent().build();
     }
 
 
