@@ -34,22 +34,16 @@ public class MovimientoService {
 
     // actualiza un movimiento existente, verifica que exista antes de guardar
     public Movimiento updateMovimiento(Movimiento movimiento) {
-        if (!movimientoRepository.existsById(movimiento.getId())) {
-            return null;
-        }
-        return movimientoRepository.save(movimiento);
+        movimientoRepository.findById(movimiento.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Movimiento no encontrado con id " + movimiento.getId()));
+            return movimientoRepository.save(movimiento);
     }
-
+    
     // elimina un movimiento si existe
-    public void eliminarMovimiento(Long id) {
-        if (movimientoRepository.existsById(id)) {
-            movimientoRepository.deleteById(id);
-        }
-    }
-
-    // Verificar si existe un movimiento con ese id
-    public boolean existeMovimiento(Long id) {
-        return movimientoRepository.existsById(id);
+    public void eliminarMovimiento(Long id){
+        movimientoRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Movimiento no encontrado con id:" + id));
+        movimientoRepository.deleteById(id);
     }
 }
 

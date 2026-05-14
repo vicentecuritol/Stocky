@@ -27,7 +27,6 @@ public class ProveedorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado con id: " +id));
     }
 
-
     // Guardar un nuevo proovedor en en la base de datos
     public Proveedor saveProveedor(Proveedor proveedor) {
         return proveedorRepository.save(proveedor);
@@ -43,13 +42,8 @@ public class ProveedorService {
 
     // elimina un proveedor si existe
     public void eliminarProveedor(Long id) {
-        if (proveedorRepository.existsById(id)) {
-            proveedorRepository.deleteById(id);
-        }
-    }
-
-    // Verificar si existe un proveedor con ese id
-    public boolean existeProveedor(Long id) {
-        return proveedorRepository.existsById(id);
+      proveedorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado con id" + id));
+        proveedorRepository.deleteById(id);
     }
 }

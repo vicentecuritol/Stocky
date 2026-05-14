@@ -22,32 +22,28 @@ public class CategoriaService {
         return categoriaRepository.findAll();
     }
 
-    // guarda una categoria nueva y la retorna con el id asignado por la BD
-    public Categoria saveCategoria(Categoria categoria) {
-        return categoriaRepository.save(categoria);
-    }
-
     // busca por id, donde si no se encuentra la categoria se va con la excepcion ResourseNotFounfException
     public Categoria getCategoriaId(Long id) {
         return categoriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: "+ id));
     }
 
+  // guarda una categoria nueva y la retorna con el id asignado por la BD
+    public Categoria saveCategoria(Categoria categoria) {
+        return categoriaRepository.save(categoria);
+    }
+
     // actualiza una categoria, verifica que exista antes de guardar
     public Categoria updateCategoria(Categoria categoria) {
-        if (!categoriaRepository.existsById(categoria.getId())) {
-            return null;// si no existe devolvemos null y el controller responde 404
-        }
-        return categoriaRepository.save(categoria); // save tambien sirve para actualizar si el id ya existe
-    }
+        categoriaRepository.findById(categoria.getId())
+                .orElseThrow(()-> new ResourceNotFoundException("Categoria no enncontrada con id: "+ categoria.getId()));
+        return categoriaRepository.save(categoria);// si no existe devolvemos null y el controller responde 404
+        }    
 
     // elimina la categoria con ese id
     public void eliminarCategoria(Long id) {
+        categoriaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: "+ id));
         categoriaRepository.deleteById(id);
+        }
     }
-
-    // verifica si existe una categoria con ese id, lo usamos antes de eliminar
-    public boolean existeCategoria(Long id) {
-        return categoriaRepository.existsById(id);
-    }
-}

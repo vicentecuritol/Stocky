@@ -32,19 +32,20 @@ public class ProductoService {
 
     // actualiza un producto existente, verifica que exista antes de guardar
     public Producto updateProducto(Producto pro){
-        if(!productoRepository.existsById(pro.getId())){
-            return null;// no existe, el controller respondera 404
-        }
-        return productoRepository.save(pro);
+        productoRepository.findById(pro.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("producto no encontrado con id " + pro.getId()));
+            return productoRepository.save(pro);
     }
 
     // elimina un producto del inventario
     public void eliminarProducto(Long id){
-        productoRepository.deleteById(id);
+        productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id" + id));
+        productoRepository.deleteById(id); 
     }
 
-    // verifica si existe un producto con ese id
-    public boolean existeProducto(Long id) {
-        return productoRepository.existsById(id);
+    // retorna productos
+    public List<Producto> getProductosBajoStock(){
+        return productoRepository.findByStockActualLessThanEqualStockMinimo();
     }
 }
