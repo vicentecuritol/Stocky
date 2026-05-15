@@ -2,7 +2,6 @@ package com.cavi.stocky.service;
 
 import java.util.List;
 
-import com.cavi.stocky.exception.NoContentException;
 import com.cavi.stocky.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,5 @@ public class CategoriaService {
         categoriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: "+ id));
         categoriaRepository.deleteById(id);
-        throw new NoContentException("Categoria eliminada");
         }
-        
     }
