@@ -46,5 +46,6 @@ public class ProveedorService {
       proveedorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado con id" + id));
         proveedorRepository.deleteById(id);
+        throw new NoContentException("Proveedor eliminado");
     }
 }

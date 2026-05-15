@@ -45,6 +45,7 @@ public class MovimientoService {
         movimientoRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Movimiento no encontrado con id:" + id));
         movimientoRepository.deleteById(id);
+        throw new NoContentException("Movimiento eliminado");
     }
 }
 
