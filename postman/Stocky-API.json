@@ -1,0 +1,425 @@
+{
+  "info": {
+    "_postman_id": "stocky-collection-v1",
+    "name": "Stocky API",
+    "description": "Coleccion de endpoints para el proyecto Stocky - Sistema de inventario.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "Listar categorias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/categorias",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "categorias"]
+            },
+            "description": "Retorna todas las categorias registradas."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar categoria por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/categorias/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "categorias", "1"]
+            },
+            "description": "Busca una categoria por id. Devuelve 404 si no existe."
+          },
+          "response": []
+        },
+        {
+          "name": "Crear categoria",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Abarrotes\",\n  \"descripcion\": \"Productos de almacen general\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/categorias",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "categorias"]
+            },
+            "description": "Crea una categoria nueva. Guarda el id que devuelva para usarlo al crear un producto."
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar categoria",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Abarrotes y Conservas\",\n  \"descripcion\": \"Productos de almacen, conservas y enlatados\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/categorias/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "categorias", "1"]
+            },
+            "description": "Actualiza una categoria existente por id. Devuelve 404 si no existe."
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar categoria",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/categorias/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "categorias", "1"]
+            },
+            "description": "Elimina una categoria por id. Devuelve 204 si se elimino, 404 si no existia."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Proveedores",
+      "item": [
+        {
+          "name": "Listar proveedores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/proveedores",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "proveedores"]
+            },
+            "description": "Retorna todos los proveedores registrados."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar proveedor por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/proveedores/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "proveedores", "1"]
+            },
+            "description": "Busca un proveedor por id. Devuelve 404 si no existe."
+          },
+          "response": []
+        },
+        {
+          "name": "Crear proveedor",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Distribuidora Sur\",\n  \"email\": \"contacto@sur.cl\",\n  \"telefono\": \"+56912345678\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/proveedores",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "proveedores"]
+            },
+            "description": "Crea un proveedor nuevo. Guarda el nombre y email para usarlos al crear un producto."
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar proveedor",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Distribuidora Sur S.A.\",\n  \"email\": \"ventas@sur.cl\",\n  \"telefono\": \"+56912345678\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/proveedores/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "proveedores", "1"]
+            },
+            "description": "Actualiza un proveedor existente por id."
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar proveedor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/proveedores/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "proveedores", "1"]
+            },
+            "description": "Elimina un proveedor por id. Devuelve 204 si se elimino, 404 si no existia."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Productos",
+      "item": [
+        {
+          "name": "Listar productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/productos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "productos"]
+            },
+            "description": "Retorna todos los productos del inventario."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar producto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/productos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "productos", "1"]
+            },
+            "description": "Busca un producto por id. Devuelve 404 si no existe."
+          },
+          "response": []
+        },
+        {
+          "name": "Crear producto",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Arroz Grado 1\",\n  \"precio\": 1500,\n  \"stockActual\": 100,\n  \"stockMinimo\": 10,\n  \"categoriaNombre\": \"Abarrotes\",\n  \"proveedorNombre\": \"Distribuidora Sur\",\n  \"proveedorEmail\": \"contacto@sur.cl\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/productos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "productos"]
+            },
+            "description": "Crea un producto nuevo. La categoria y proveedor deben existir previamente. El email del proveedor debe coincidir con el registrado."
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar producto",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Arroz Grado 1 Premium\",\n  \"precio\": 1800,\n  \"stockActual\": 80,\n  \"stockMinimo\": 10,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"proveedor\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/productos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "productos", "1"]
+            },
+            "description": "Actualiza un producto existente. Usa los ids de categoria y proveedor."
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar producto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/productos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "productos", "1"]
+            },
+            "description": "Elimina un producto por id. Devuelve 204 si se elimino, 404 si no existia."
+          },
+          "response": []
+        },
+        {
+          "name": "Productos bajo stock",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/productos/bajo-stock",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "productos", "bajo-stock"]
+            },
+            "description": "Retorna los productos donde stockActual es menor o igual a stockMinimo. Si todos estan bien abastecidos devuelve lista vacia."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Movimientos",
+      "item": [
+        {
+          "name": "Listar movimientos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/movimientos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "movimientos"]
+            },
+            "description": "Retorna todo el historial de movimientos de stock."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar movimiento por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/movimientos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "movimientos", "1"]
+            },
+            "description": "Busca un movimiento por id. Devuelve 404 si no existe."
+          },
+          "response": []
+        },
+        {
+          "name": "Crear movimiento ENTRADA",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"ENTRADA\",\n  \"cantidad\": 50,\n  \"fecha\": \"2024-01-15T10:00:00\",\n  \"observacion\": \"Reposicion semanal\",\n  \"producto\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/movimientos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "movimientos"]
+            },
+            "description": "Registra una entrada de stock. El tipo debe ser ENTRADA o SALIDA. El producto debe existir."
+          },
+          "response": []
+        },
+        {
+          "name": "Crear movimiento SALIDA",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"SALIDA\",\n  \"cantidad\": 10,\n  \"fecha\": \"2024-01-15T14:30:00\",\n  \"observacion\": \"Despacho a cliente\",\n  \"producto\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/movimientos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "movimientos"]
+            },
+            "description": "Registra una salida de stock."
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar movimiento",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"ENTRADA\",\n  \"cantidad\": 60,\n  \"fecha\": \"2024-01-15T10:00:00\",\n  \"observacion\": \"Reposicion semanal corregida\",\n  \"producto\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/movimientos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "movimientos", "1"]
+            },
+            "description": "Actualiza un movimiento existente por id."
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar movimiento",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/movimientos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "movimientos", "1"]
+            },
+            "description": "Elimina un movimiento del historial. Devuelve 204 si se elimino, 404 si no existia."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Clima (Open-Meteo)",
+      "item": [
+        {
+          "name": "Clima actual - Santiago (default)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clima",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clima"]
+            },
+            "description": "Devuelve el clima actual de Santiago de Chile usando Open-Meteo (lat=-33.45, lon=-70.65). No requiere parametros.\n\nEjemplo de respuesta:\n{\n  \"latitude\": -33.45,\n  \"longitude\": -70.65,\n  \"current_weather\": {\n    \"temperature\": 14.5,\n    \"windspeed\": 22.3,\n    \"weathercode\": 3,\n    \"time\": \"2024-01-15T12:00\"\n  }\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "Clima actual - coordenadas personalizadas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clima?lat=-41.47&lon=-72.94",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clima"],
+              "query": [
+                {
+                  "key": "lat",
+                  "value": "-41.47",
+                  "description": "Latitud (ej: -41.47 para Puerto Montt)"
+                },
+                {
+                  "key": "lon",
+                  "value": "-72.94",
+                  "description": "Longitud (ej: -72.94 para Puerto Montt)"
+                }
+              ]
+            },
+            "description": "Devuelve el clima para coordenadas personalizadas. Puedes cambiar lat y lon por cualquier ciudad del mundo."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
