@@ -6,7 +6,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.LocalDateTime;
+
+@Slf4j
 // atrapa todas las excepciones de todos los controllers
 // en vez de mostrar errores tecnicos feos, devuelve un JSON ordenado al cliente
 @ControllerAdvice // intercepta las excepciones que escapan de los controllers
@@ -17,7 +21,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleResourceNotFound(
             ResourceNotFoundException ex,
             WebRequest request) {
-
+        //log WARN y no ERROR para no contaminar alertas, warn no es un error si no que se busca algo que no existe 
+        log.warn("404 Recurso no encontrado '{}' | Ruta {}",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", ""));
         ApiError error = new ApiError(
                 LocalDateTime.now(),          // hora exacta del error
                 HttpStatus.NOT_FOUND.value(), // codigo 404
@@ -34,7 +41,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleIllegalArgument(
             IllegalArgumentException ex,
             WebRequest request) {
-
+                log.warn("400 No se proceso solicitud '{}' | Ruta {}",
+                        ex.getMessage(),
+                        request.getDescription(false).replace("uri=",""));
         ApiError error = new ApiError(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),  // codigo 400
@@ -52,7 +61,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleGlobalException(
             Exception ex,
             WebRequest request) {
-
+        log.warn("500 No hay respuesta del servidor '{}' | Ruta {}",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", ""));
         ApiError error = new ApiError(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),  // codigo 500
