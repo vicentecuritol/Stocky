@@ -46,6 +46,6 @@ public class ProductoService {
 
     // retorna productos
     public List<Producto> getProductosBajoStock(){
-        return productoRepository.findByStockActualLessThanEqualStockMinimo();
+        return productoRepository.obtenerProductosConStockBajo();
     }
 }
