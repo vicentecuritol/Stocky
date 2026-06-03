@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cavi.stocky.model.Proveedor;
 import com.cavi.stocky.repository.ProveedorRepository;
 
+
 // logica de negocio de proveedor, mismo patron que CategoriaService
 @Service
 public class ProveedorService {
@@ -34,9 +35,8 @@ public class ProveedorService {
 
     // actualiza un proveedor existente, si no existe devuelve null
     public Proveedor updateProveedor(Proveedor proveedor) {
-        if (!proveedorRepository.existsById(proveedor.getId())) {
-            return null;
-        }
+        proveedorRepository.findById(proveedor.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado con id: " + proveedor.getId()));
         return proveedorRepository.save(proveedor);
     }
 
