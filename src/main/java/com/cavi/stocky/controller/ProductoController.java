@@ -97,8 +97,9 @@ public class ProductoController {
     // GET /api/v1/productos/bajo-stock - productos que necesitan reabastecimiento
     // retorna los que tienen stockActual menor o igual al stockMinimo
     @GetMapping("/bajo-stock")
-    public ResponseEntity<List<ProductoResponseDto>> productosBajoStock() {
-        List<ProductoResponseDto> bajoStock = productoService.getProductos().stream()
+    public ResponseEntity<List<ProductoResponseDto>>
+    productosBajoStock() {
+        List<ProductoResponseDto> bajoStock = productoService.getProductosBajoStock().stream()
                 .map(this::convertirAResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(bajoStock);
