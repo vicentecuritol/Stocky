@@ -38,6 +38,12 @@ public class MovimientoController {
     // POST /api/v1/movimientos - registra una entrada o salida de stock
     @PostMapping
     public ResponseEntity<MovimientoResponseDto> crear(@Valid @RequestBody Movimiento movimiento) {
+        Movimiento newMovimiento = new Movimiento();
+        newMovimiento.setCantidad(movimiento.getCantidad());
+        newMovimiento.setFecha(movimiento.getFecha());
+        newMovimiento.setTipo(movimiento.getTipo());
+        newMovimiento.setObservacion(movimiento.getObservacion());
+        
         Movimiento nuevo = movimientoService.saveMovimiento(movimiento);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));    
     }

@@ -38,6 +38,11 @@ public class ProveedorController {
     // POST /api/v1/proveedores - crea un proveedor nuevo
     @PostMapping
     public ResponseEntity<ProveedorResponseDto> crear(@Valid @RequestBody Proveedor proveedor) {
+        Proveedor newProveedor = new Proveedor();
+        newProveedor.setNombre(proveedor.getNombre());
+        newProveedor.setEmail(proveedor.getEmail());
+        newProveedor.setTelefono(proveedor.getTelefono());
+        
         Proveedor nuevo = proveedorService.saveProveedor(proveedor);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
     }
