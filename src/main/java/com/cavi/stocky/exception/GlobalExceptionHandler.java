@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.validation.FieldError;
+import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 
 // atrapa todas las excepciones de todos los controllers
@@ -30,20 +32,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    // se activa cuando lanzamos IllegalArgumentException, responde 400
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiError> handleIllegalArgument(
-            IllegalArgumentException ex,
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError> handleValidationErrors(
+            MethodArgumentNotValidException ex,
             WebRequest request) {
+
+        String mensajes = ex.getBindingResult().getFieldErrors().stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining(", "));
 
         ApiError error = new ApiError(
                 LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),  // codigo 400
-                "Argumento Inválido",
-                ex.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Error de Validación",
+                mensajes,
                 request.getDescription(false).replace("uri=", "")
         );
-
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 

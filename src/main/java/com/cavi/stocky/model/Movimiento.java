@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class Movimiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El tipo de movimiento no puede estar vacío")
+    @Pattern(regexp = "^(ENTRADA|SALIDA)$", message = "El tipo debe ser ENTRADA o SALIDA")
     private String tipo; // ENTRADA cuando llega mercaderia, SALIDA cuando se despacha
 
     @NotNull(message = "La cantidad es obligatoria")
@@ -37,3 +38,6 @@ public class Movimiento {
     @JoinColumn (name = "producto_id") // columna en la tabla movimiento con el id del producto
     private Producto producto;
 }
+
+
+
