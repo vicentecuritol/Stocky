@@ -2,6 +2,7 @@ package com.cavi.stocky.controller;
 
 
 import com.cavi.stocky.dto.CategoriaResponseDto;
+import com.cavi.stocky.dto.CategoriaUpdateRequestDto;
 import com.cavi.stocky.model.Categoria;
 import com.cavi.stocky.service.CategoriaService;
 import jakarta.validation.Valid;
@@ -41,10 +42,14 @@ public class CategoriaController {
 
     // POST /api/v1/categorias - crea una categoria nueva
     @PostMapping
-    public ResponseEntity<CategoriaResponseDto> crear(@Valid @RequestBody Categoria categoria) {
+    public ResponseEntity<CategoriaResponseDto> crear(@Valid @RequestBody CategoriaUpdateRequestDto categoria) {
         // @Valid activa las validaciones del modelo antes de continuar
         // @RequestBody convierte el JSON del cliente en objeto Categoria
-        Categoria nueva = categoriaService.saveCategoria(categoria);
+        Categoria newCategoria = new Categoria();
+        newCategoria.setNombre(categoria.getNombre());
+        newCategoria.setDescripcion(categoria.getDescripcion());
+
+        Categoria nueva = categoriaService.saveCategoria(newCategoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nueva)); // responde 201 Created
     }
 
