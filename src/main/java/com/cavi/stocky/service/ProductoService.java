@@ -1,7 +1,7 @@
 package com.cavi.stocky.service;
 
 import java.util.List;
-
+import com.cavi.stocky.repository.MovimientoRepository;
 import com.cavi.stocky.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +13,9 @@ import com.cavi.stocky.repository.ProductoRepository;
 public class ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private MovimientoRepository movimientoRepository; // necesario para verificar movimientos antes de eliminar
 
     // retorna todos los productos del inventario
     public List<Producto> getProductos(){
@@ -38,11 +41,16 @@ public class ProductoService {
     }
 
     // elimina un producto del inventario
-    public void eliminarProducto(Long id){
+    public void eliminarProducto(Long id) {
         productoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id" + id));
-        productoRepository.deleteById(id); 
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
+        if (movimientoRepository.existsByProductoId(id)) {
+            throw new IllegalArgumentException(
+                    "No se puede eliminar el producto porque tiene movimientos asociados");
+        }
+        productoRepository.deleteById(id);
     }
+
 
     // retorna productos
     public List<Producto> getProductosBajoStock(){

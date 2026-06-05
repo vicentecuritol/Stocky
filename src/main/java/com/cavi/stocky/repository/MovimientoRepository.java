@@ -9,4 +9,5 @@ import com.cavi.stocky.model.Movimiento;
 @Repository
 public interface MovimientoRepository extends JpaRepository <Movimiento, Long>{
 
+    boolean existsByProductoId(Long productoId);
 }
