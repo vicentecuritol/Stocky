@@ -52,12 +52,6 @@ public class MovimientoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
     }
 
-    // PUT /api/v1/movimientos/{id} - actualiza un movimiento existente
-    @PutMapping("/{id}")
-    public ResponseEntity<MovimientoResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Movimiento movimiento) {
-        movimiento.setId(id);
-        return ResponseEntity.ok(convertirAResponse(movimientoService.updateMovimiento(movimiento)));
-    }
 
     // DELETE /api/v1/movimientos/{id} - elimina un movimiento del historial
     @DeleteMapping("/{id}")

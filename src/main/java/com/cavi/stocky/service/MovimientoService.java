@@ -52,12 +52,7 @@ public class MovimientoService {
         return movimientoRepository.save(movimiento);
     }
 
-    // actualiza un movimiento existente, verifica que exista antes de guardar
-    public Movimiento updateMovimiento(Movimiento movimiento) {
-        movimientoRepository.findById(movimiento.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Movimiento no encontrado con id " + movimiento.getId()));
-            return movimientoRepository.save(movimiento);
-    }
+
 
     // elimina un movimiento si existe
     public void eliminarMovimiento(Long id){

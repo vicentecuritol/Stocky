@@ -347,24 +347,6 @@
           "response": []
         },
         {
-          "name": "Actualizar movimiento",
-          "request": {
-            "method": "PUT",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"tipo\": \"ENTRADA\",\n  \"cantidad\": 60,\n  \"fecha\": \"2024-01-15T10:00:00\",\n  \"observacion\": \"Reposicion semanal corregida\",\n  \"producto\": {\n    \"id\": 1\n  }\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/movimientos/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "movimientos", "1"]
-            },
-            "description": "Actualiza un movimiento existente por id."
-          },
-          "response": []
-        },
-        {
           "name": "Eliminar movimiento",
           "request": {
             "method": "DELETE",
