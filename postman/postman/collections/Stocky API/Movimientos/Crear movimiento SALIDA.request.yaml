@@ -1,0 +1,17 @@
+$kind: http-request
+description: Registra una salida de stock. Se manda solo el productoId como numero.
+url: "{{baseUrl}}/api/v1/movimientos"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "tipo": "SALIDA",
+      "cantidad": 10,
+      "fecha": "2024-01-15T14:30:00",
+      "observacion": "Despacho a cliente",
+      "productoId": 1
+    }
+order: 4000

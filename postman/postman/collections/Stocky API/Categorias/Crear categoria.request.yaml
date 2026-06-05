@@ -1,0 +1,14 @@
+$kind: http-request
+description: Crea una categoria nueva. Guarda el id que devuelva para usarlo al crear un producto.
+url: "{{baseUrl}}/api/v1/categorias"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nombre": "Abarrotes",
+      "descripcion": "Productos de almacen general"
+    }
+order: 3000

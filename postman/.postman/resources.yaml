@@ -1,0 +1,11 @@
+# Use this workspace to collaborate
+workspace:
+  id: 4dce52ad-e1ce-400e-87c1-285b221ace4e
+
+localResources:
+  collections:
+    - ..\Stocky-API.json
+
+cloudResources:
+  collections:
+    ..\postman\collections\Stocky API: 53a5595d-4fd8-4966-854f-557da8c9cfc9

@@ -1,0 +1,17 @@
+$kind: http-request
+description: Registra una entrada de stock. El tipo debe ser ENTRADA o SALIDA. El producto debe existir. Se manda solo el productoId como numero.
+url: "{{baseUrl}}/api/v1/movimientos"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "tipo": "ENTRADA",
+      "cantidad": 50,
+      "fecha": "2024-01-15T10:00:00",
+      "observacion": "Reposicion semanal",
+      "productoId": 1
+    }
+order: 3000

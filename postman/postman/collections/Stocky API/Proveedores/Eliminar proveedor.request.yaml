@@ -1,0 +1,5 @@
+$kind: http-request
+description: Elimina un proveedor por id. Devuelve 204 si se elimino, 404 si no existia.
+url: "{{baseUrl}}/api/v1/proveedores/1"
+method: DELETE
+order: 5000

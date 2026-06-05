@@ -1,0 +1,15 @@
+$kind: http-request
+description: Crea un proveedor nuevo. Guarda el nombre y email para usarlos al crear un producto.
+url: "{{baseUrl}}/api/v1/proveedores"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nombre": "Distribuidora Sur",
+      "email": "contacto@sur.cl",
+      "telefono": "+56912345678"
+    }
+order: 3000

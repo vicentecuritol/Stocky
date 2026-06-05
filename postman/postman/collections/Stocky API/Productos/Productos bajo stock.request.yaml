@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retorna los productos donde stockActual es menor o igual a stockMinimo. Si todos estan bien abastecidos devuelve lista vacia.
+url: "{{baseUrl}}/api/v1/productos/bajo-stock"
+method: GET
+order: 6000

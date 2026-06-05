@@ -1,0 +1,5 @@
+$kind: http-request
+description: Elimina un movimiento del historial. Devuelve 204 si se elimino, 404 si no existia.
+url: "{{baseUrl}}/api/v1/movimientos/1"
+method: DELETE
+order: 6000

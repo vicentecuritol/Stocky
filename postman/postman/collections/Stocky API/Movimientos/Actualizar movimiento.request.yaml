@@ -1,0 +1,19 @@
+$kind: http-request
+description: Actualiza un movimiento existente por id.
+url: "{{baseUrl}}/api/v1/movimientos/1"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "tipo": "ENTRADA",
+      "cantidad": 60,
+      "fecha": "2024-01-15T10:00:00",
+      "observacion": "Reposicion semanal corregida",
+      "producto": {
+        "id": 1
+      }
+    }
+order: 5000

@@ -1,0 +1,19 @@
+$kind: http-request
+description: Crea un producto nuevo. La categoria y proveedor deben existir previamente. El email del proveedor debe coincidir con el registrado.
+url: "{{baseUrl}}/api/v1/productos"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nombre": "Arroz Grado 1",
+      "precio": 1500,
+      "stockActual": 100,
+      "stockMinimo": 10,
+      "categoriaNombre": "Abarrotes",
+      "proveedorNombre": "Distribuidora Sur",
+      "proveedorEmail": "contacto@sur.cl"
+    }
+order: 3000

@@ -1,0 +1,18 @@
+$kind: http-request
+description: |-
+  Devuelve el clima actual de Santiago de Chile usando Open-Meteo (lat=-33.45, lon=-70.65). No requiere parametros.
+
+  Ejemplo de respuesta:
+  {
+    "latitude": -33.45,
+    "longitude": -70.65,
+    "current_weather": {
+      "temperature": 14.5,
+      "windspeed": 22.3,
+      "weathercode": 3,
+      "time": "2024-01-15T12:00"
+    }
+  }
+url: "{{baseUrl}}/api/v1/clima"
+method: GET
+order: 1000

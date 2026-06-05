@@ -1,0 +1,14 @@
+$kind: http-request
+description: Actualiza una categoria existente por id. Devuelve 404 si no existe.
+url: "{{baseUrl}}/api/v1/categorias/1"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nombre": "Abarrotes y Conservas",
+      "descripcion": "Productos de almacen, conservas y enlatados"
+    }
+order: 4000

@@ -1,0 +1,5 @@
+$kind: http-request
+description: Busca una categoria por id. Devuelve 404 si no existe.
+url: "{{baseUrl}}/api/v1/categorias/1"
+method: GET
+order: 2000

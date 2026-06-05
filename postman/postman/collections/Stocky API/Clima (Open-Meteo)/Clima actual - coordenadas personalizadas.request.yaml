@@ -1,0 +1,12 @@
+$kind: http-request
+description: Devuelve el clima para coordenadas personalizadas. Puedes cambiar lat y lon por cualquier ciudad del mundo.
+url: "{{baseUrl}}/api/v1/clima?lat=-41.47&lon=-72.94"
+method: GET
+queryParams:
+  - key: lat
+    value: "-41.47"
+    description: "Latitud (ej: -41.47 para Puerto Montt)"
+  - key: lon
+    value: "-72.94"
+    description: "Longitud (ej: -72.94 para Puerto Montt)"
+order: 2000

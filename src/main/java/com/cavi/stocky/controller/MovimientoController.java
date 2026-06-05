@@ -1,8 +1,10 @@
 package com.cavi.stocky.controller;
 
+import com.cavi.stocky.dto.MovimientoCreateRequestDto;
 import com.cavi.stocky.dto.MovimientoResponseDto;
 import com.cavi.stocky.model.Movimiento;
 import com.cavi.stocky.service.MovimientoService;
+import com.cavi.stocky.service.ProductoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class MovimientoController {
 
     private final MovimientoService movimientoService;
+    private final ProductoService productoService; // campo faltante
 
     // GET /api/v1/movimientos - trae todo el historial
     @GetMapping
@@ -37,15 +40,16 @@ public class MovimientoController {
 
     // POST /api/v1/movimientos - registra una entrada o salida de stock
     @PostMapping
-    public ResponseEntity<MovimientoResponseDto> crear(@Valid @RequestBody Movimiento movimiento) {
-        Movimiento newMovimiento = new Movimiento();
-        newMovimiento.setCantidad(movimiento.getCantidad());
-        newMovimiento.setFecha(movimiento.getFecha());
-        newMovimiento.setTipo(movimiento.getTipo());
-        newMovimiento.setObservacion(movimiento.getObservacion());
-        
+    public ResponseEntity<MovimientoResponseDto> crear(@Valid @RequestBody MovimientoCreateRequestDto request) {
+        Movimiento movimiento = new Movimiento();
+        movimiento.setTipo(request.getTipo());
+        movimiento.setCantidad(request.getCantidad());
+        movimiento.setFecha(request.getFecha());
+        movimiento.setObservacion(request.getObservacion());
+        movimiento.setProducto(productoService.getProductoId(request.getProductoId())); // p minúscula — instancia
+
         Movimiento nuevo = movimientoService.saveMovimiento(movimiento);
-        return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));    
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
     }
 
     // PUT /api/v1/movimientos/{id} - actualiza un movimiento existente

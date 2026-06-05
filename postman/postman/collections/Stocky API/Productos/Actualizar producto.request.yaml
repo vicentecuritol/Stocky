@@ -1,0 +1,22 @@
+$kind: http-request
+description: Actualiza un producto existente. Usa los ids de categoria y proveedor.
+url: "{{baseUrl}}/api/v1/productos/1"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nombre": "Arroz Grado 1 Premium",
+      "precio": 1800,
+      "stockActual": 80,
+      "stockMinimo": 10,
+      "categoria": {
+        "id": 1
+      },
+      "proveedor": {
+        "id": 1
+      }
+    }
+order: 4000

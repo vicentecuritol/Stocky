@@ -307,14 +307,19 @@
             "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tipo\": \"ENTRADA\",\n  \"cantidad\": 50,\n  \"fecha\": \"2024-01-15T10:00:00\",\n  \"observacion\": \"Reposicion semanal\",\n  \"producto\": {\n    \"id\": 1\n  }\n}"
+              "raw": "{\n  \"tipo\": \"ENTRADA\",\n  \"cantidad\": 50,\n  \"fecha\": \"2024-01-15T10:00:00\",\n  \"observacion\": \"Reposicion semanal\",\n  \"productoId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/api/v1/movimientos",
               "host": ["{{baseUrl}}"],
               "path": ["api", "v1", "movimientos"]
             },
-            "description": "Registra una entrada de stock. El tipo debe ser ENTRADA o SALIDA. El producto debe existir."
+            "description": "Registra una entrada de stock. El tipo debe ser ENTRADA o SALIDA. El producto debe existir. Se manda solo el productoId como numero."
           },
           "response": []
         },
@@ -325,14 +330,19 @@
             "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tipo\": \"SALIDA\",\n  \"cantidad\": 10,\n  \"fecha\": \"2024-01-15T14:30:00\",\n  \"observacion\": \"Despacho a cliente\",\n  \"producto\": {\n    \"id\": 1\n  }\n}"
+              "raw": "{\n  \"tipo\": \"SALIDA\",\n  \"cantidad\": 10,\n  \"fecha\": \"2024-01-15T14:30:00\",\n  \"observacion\": \"Despacho a cliente\",\n  \"productoId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/api/v1/movimientos",
               "host": ["{{baseUrl}}"],
               "path": ["api", "v1", "movimientos"]
             },
-            "description": "Registra una salida de stock."
+            "description": "Registra una salida de stock. Se manda solo el productoId como numero."
           },
           "response": []
         },

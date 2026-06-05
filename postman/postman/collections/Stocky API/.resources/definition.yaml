@@ -1,0 +1,4 @@
+$kind: collection
+description: Coleccion de endpoints para el proyecto Stocky - Sistema de inventario.
+variables:
+  baseUrl: http://localhost:8080

@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retorna todos los proveedores registrados.
+url: "{{baseUrl}}/api/v1/proveedores"
+method: GET
+order: 1000

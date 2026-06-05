@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retorna todo el historial de movimientos de stock.
+url: "{{baseUrl}}/api/v1/movimientos"
+method: GET
+order: 1000

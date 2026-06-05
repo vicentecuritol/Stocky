@@ -1,0 +1,15 @@
+$kind: http-request
+description: Actualiza un proveedor existente por id.
+url: "{{baseUrl}}/api/v1/proveedores/1"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nombre": "Distribuidora Sur S.A.",
+      "email": "ventas@sur.cl",
+      "telefono": "+56912345678"
+    }
+order: 4000

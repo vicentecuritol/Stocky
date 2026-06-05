@@ -1,0 +1,5 @@
+$kind: http-request
+description: Busca un movimiento por id. Devuelve 404 si no existe.
+url: "{{baseUrl}}/api/v1/movimientos/1"
+method: GET
+order: 2000

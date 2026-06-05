@@ -1,0 +1,5 @@
+$kind: http-request
+description: Elimina una categoria por id. Devuelve 204 si se elimino, 404 si no existia.
+url: "{{baseUrl}}/api/v1/categorias/1"
+method: DELETE
+order: 5000
