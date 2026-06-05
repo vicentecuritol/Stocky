@@ -37,11 +37,11 @@ public class MovimientoService {
         Producto producto = movimiento.getProducto();
         if(producto != null ) {
             String tipo = movimiento.getTipo().toUpperCase();
-            Integer stockActual =  producto.getStockActual() != null ? producto.getStockActual() : 0;
+            int stockActual =  producto.getStockActual() != null ? producto.getStockActual() : 0;
             if(tipo.equals("ENTRADA")) {
-                producto.setStockActual(producto.getStockActual() + movimiento.getCantidad());
+                producto.setStockActual(stockActual + movimiento.getCantidad());
             }else if(tipo.equals("SALIDA")) {
-                int nuevoStock = producto.getStockActual() - movimiento.getCantidad();
+                int nuevoStock = stockActual - movimiento.getCantidad();
                 if(nuevoStock < 0) {
                     throw new IllegalArgumentException("Stock insuficiente para realizar la salida");
                 }
