@@ -1,5 +1,6 @@
 package com.cavi.stocky.controller;
 
+import com.cavi.stocky.dto.ProveedorCreateRequestDto;
 import com.cavi.stocky.dto.ProveedorResponseDto;
 import com.cavi.stocky.model.Proveedor;
 import com.cavi.stocky.service.ProveedorService;
@@ -37,15 +38,25 @@ public class ProveedorController {
 
     // POST /api/v1/proveedores - crea un proveedor nuevo
     @PostMapping
-    public ResponseEntity<ProveedorResponseDto> crear(@Valid @RequestBody Proveedor proveedor) {
+    public ResponseEntity<ProveedorResponseDto> crear(@Valid @RequestBody ProveedorCreateRequestDto request) {
+        Proveedor proveedor = new Proveedor();
+        proveedor.setNombre(request.getNombre());
+        proveedor.setEmail(request.getEmail());
+        proveedor.setTelefono(request.getTelefono());
         Proveedor nuevo = proveedorService.saveProveedor(proveedor);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertirAResponse(nuevo));
     }
 
     // PUT /api/v1/proveedores/{id} - actualiza un proveedor existente
     @PutMapping("/{id}")
-    public ResponseEntity<ProveedorResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Proveedor proveedor) {
+    public ResponseEntity<ProveedorResponseDto> actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody ProveedorCreateRequestDto request) {
+        Proveedor proveedor = new Proveedor();
         proveedor.setId(id);
+        proveedor.setNombre(request.getNombre());
+        proveedor.setEmail(request.getEmail());
+        proveedor.setTelefono(request.getTelefono());
         return ResponseEntity.ok(convertirAResponse(proveedorService.updateProveedor(proveedor)));
     }
 
