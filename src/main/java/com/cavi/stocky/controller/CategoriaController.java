@@ -55,8 +55,13 @@ public class CategoriaController {
 
     // PUT /api/v1/categorias/{id} - actualiza una categoria existente
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Categoria categoria) {
+    public ResponseEntity<CategoriaResponseDto> actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody CategoriaUpdateRequestDto request) {
+        Categoria categoria = new Categoria();
         categoria.setId(id);
+        categoria.setNombre(request.getNombre());
+        categoria.setDescripcion(request.getDescripcion());
         return ResponseEntity.ok(convertirAResponse(categoriaService.updateCategoria(categoria)));
     }
 

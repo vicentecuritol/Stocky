@@ -76,15 +76,8 @@ public class ProductoController {
             @PathVariable Long id,
             @Valid @RequestBody ProductoCreateRequestDto request) {
 
-        Categoria categoria = categoriaService.getCategorias().stream()
-                .filter(c -> c.getNombre().equalsIgnoreCase(request.getCategoriaNombre()))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Categoría no encontrada: " + request.getCategoriaNombre()));
-
-        Proveedor proveedor = proveedorService.getProveedores().stream()
-                .filter(p -> p.getNombre().equalsIgnoreCase(request.getProveedorNombre()))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado: " + request.getProveedorNombre()));
+        Categoria categoria = categoriaService.getCategoriaByNombre(request.getCategoriaNombre());
+        Proveedor proveedor = proveedorService.getProveedorByNombre(request.getProveedorNombre());
 
         if (!proveedor.getEmail().equalsIgnoreCase(request.getProveedorEmail())) {
             throw new IllegalArgumentException("El email del proveedor no coincide. email registrado: " + proveedor.getEmail());
