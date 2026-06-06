@@ -4,7 +4,6 @@ import java.util.List;
 import com.cavi.stocky.repository.MovimientoRepository;
 import com.cavi.stocky.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cavi.stocky.model.Producto;
