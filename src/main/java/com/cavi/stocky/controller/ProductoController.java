@@ -48,18 +48,8 @@ public class ProductoController {
     @PostMapping
     public ResponseEntity<ProductoResponseDto> crear(@Valid @RequestBody ProductoCreateRequestDto request) {
         // buscamos la categoria por nombre entre las registradas, si no existe lanza excepcion
-        Categoria categoria = categoriaService.getCategorias().stream()
-                .filter(c -> c.getNombre().equalsIgnoreCase(request.getCategoriaNombre()))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Categoría no encontrada: " + request.getCategoriaNombre()));
-
-        // buscamos el proveedor por nombre, si no existe lanza excepcion
-        Proveedor proveedor = proveedorService.getProveedores().stream()
-                .filter(p -> p.getNombre().equalsIgnoreCase(request.getProveedorNombre()))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Proveedor no encontrado: " + request.getProveedorNombre()));
+        Categoria categoria = categoriaService.getCategoriaByNombre(request.getCategoriaNombre());
+        Proveedor proveedor = proveedorService.getProveedorByNombre(request.getProveedorNombre());
 
         // verificamos que el email que mando el cliente coincida con el del proveedor registrado
         if (!proveedor.getEmail().equalsIgnoreCase(request.getProveedorEmail())) {
@@ -82,8 +72,33 @@ public class ProductoController {
 
     // PUT /api/v1/productos/{id} - actualiza un producto existente
     @PutMapping("/{id}")
-    public ResponseEntity<ProductoResponseDto> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
+    public ResponseEntity<ProductoResponseDto> actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody ProductoCreateRequestDto request) {
+
+        Categoria categoria = categoriaService.getCategorias().stream()
+                .filter(c -> c.getNombre().equalsIgnoreCase(request.getCategoriaNombre()))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Categoría no encontrada: " + request.getCategoriaNombre()));
+
+        Proveedor proveedor = proveedorService.getProveedores().stream()
+                .filter(p -> p.getNombre().equalsIgnoreCase(request.getProveedorNombre()))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado: " + request.getProveedorNombre()));
+
+        if (!proveedor.getEmail().equalsIgnoreCase(request.getProveedorEmail())) {
+            throw new IllegalArgumentException("El email del proveedor no coincide. email registrado: " + proveedor.getEmail());
+        }
+
+        Producto producto = new Producto();
         producto.setId(id);
+        producto.setNombre(request.getNombre());
+        producto.setPrecio(request.getPrecio());
+        producto.setStockActual(request.getStockActual());
+        producto.setStockMinimo(request.getStockMinimo());
+        producto.setCategoria(categoria);
+        producto.setProveedor(proveedor);
+
         return ResponseEntity.ok(convertirAResponse(productoService.updateProducto(producto)));
     }
 

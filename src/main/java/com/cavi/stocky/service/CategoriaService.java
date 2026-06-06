@@ -54,4 +54,10 @@ public class CategoriaService {
         }
         categoriaRepository.deleteById(id);
     }
+
+    //Esto es para buscar una categoria
+    public Categoria getCategoriaByNombre(String nombre) {
+        return categoriaRepository.findByNombreIgnoreCase(nombre)
+                .orElseThrow(() -> new ResourceNotFoundException("Categoría no encontrada: " + nombre));
+    }
 }

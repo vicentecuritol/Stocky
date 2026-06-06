@@ -46,4 +46,10 @@ public class ProveedorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado con id" + id));
         proveedorRepository.deleteById(id);
     }
+
+    //Esto es para buscar el proveedor por el nombre
+    public Proveedor getProveedorByNombre(String nombre) {
+        return proveedorRepository.findByNombreIgnoreCase(nombre)
+                .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado: " + nombre));
+    }
 }
