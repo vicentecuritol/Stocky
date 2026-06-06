@@ -3,7 +3,7 @@ package com.cavi.stocky.service;
 import java.util.List;
 
 import com.cavi.stocky.exception.ResourceNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.cavi.stocky.model.Proveedor;
@@ -12,9 +12,8 @@ import com.cavi.stocky.repository.ProveedorRepository;
 
 // logica de negocio de proveedor, mismo patron que CategoriaService
 @Service
+@AllArgsConstructor
 public class ProveedorService {
-
-    @Autowired
     private ProveedorRepository proveedorRepository;
 
     // retorna todos los proveedores registrados

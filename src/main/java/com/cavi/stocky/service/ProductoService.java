@@ -3,6 +3,7 @@ package com.cavi.stocky.service;
 import java.util.List;
 import com.cavi.stocky.repository.MovimientoRepository;
 import com.cavi.stocky.exception.ResourceNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,9 @@ import com.cavi.stocky.model.Producto;
 import com.cavi.stocky.repository.ProductoRepository;
 // logica de negocio de producto
 @Service
+@AllArgsConstructor
 public class ProductoService {
-    @Autowired
     private ProductoRepository productoRepository;
-
-    @Autowired
     private MovimientoRepository movimientoRepository; // necesario para verificar movimientos antes de eliminar
 
     // retorna todos los productos del inventario

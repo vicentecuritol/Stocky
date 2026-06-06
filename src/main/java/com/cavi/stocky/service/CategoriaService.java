@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.cavi.stocky.exception.ResourceNotFoundException;
 import com.cavi.stocky.repository.ProductoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.cavi.stocky.model.Categoria;
@@ -13,13 +13,10 @@ import com.cavi.stocky.repository.CategoriaRepository;
 // logica de negocio de categoria
 // el controller recibe la peticion HTTP y nos la pasa, nosotros hacemos el trabajo
 @Service // indica que esta clase es un componente de logica de negocio
+@AllArgsConstructor
 public class CategoriaService {
-
-    @Autowired // spring inyecta el repositorio automaticamente, no necesitamos hacer new
-    private CategoriaRepository categoriaRepository;
-
-    @Autowired
-    private ProductoRepository productoRepository;
+    private final CategoriaRepository categoriaRepository;
+    private final ProductoRepository productoRepository;
 
     // retorna todas las categorias, si no hay ninguna devuelve lista vacia
     public List<Categoria> getCategorias() {
