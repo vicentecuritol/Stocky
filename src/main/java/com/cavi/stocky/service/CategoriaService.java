@@ -3,6 +3,7 @@ package com.cavi.stocky.service;
 import java.util.List;
 
 import com.cavi.stocky.exception.ResourceNotFoundException;
+import com.cavi.stocky.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class CategoriaService {
     @Autowired // spring inyecta el repositorio automaticamente, no necesitamos hacer new
     private CategoriaRepository categoriaRepository;
 
+    @Autowired
+    private ProductoRepository productoRepository;
+
     // retorna todas las categorias, si no hay ninguna devuelve lista vacia
     public List<Categoria> getCategorias() {
         return categoriaRepository.findAll();
@@ -25,10 +29,10 @@ public class CategoriaService {
     // busca por id, donde si no se encuentra la categoria se va con la excepcion ResourseNotFounfException
     public Categoria getCategoriaId(Long id) {
         return categoriaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: "+ id));
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: " + id));
     }
 
-  // guarda una categoria nueva y la retorna con el id asignado por la BD
+    // guarda una categoria nueva y la retorna con el id asignado por la BD
     public Categoria saveCategoria(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
@@ -36,14 +40,18 @@ public class CategoriaService {
     // actualiza una categoria, verifica que exista antes de guardar
     public Categoria updateCategoria(Categoria categoria) {
         categoriaRepository.findById(categoria.getId())
-                .orElseThrow(()-> new ResourceNotFoundException("Categoria no enncontrada con id: "+ categoria.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria no enncontrada con id: " + categoria.getId()));
         return categoriaRepository.save(categoria);// si no existe devolvemos null y el controller responde 404
-        }    
+    }
 
     // elimina la categoria con ese id
     public void eliminarCategoria(Long id) {
         categoriaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: "+ id));
-        categoriaRepository.deleteById(id);
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: " + id));
+        if (productoRepository.existsByCategoriaId(id)) {
+            throw new IllegalArgumentException(
+                    "No se puede eliminar la categoría porque tiene productos asociados");
         }
+        categoriaRepository.deleteById(id);
     }
+}
