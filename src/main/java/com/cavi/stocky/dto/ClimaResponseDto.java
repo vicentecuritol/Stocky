@@ -1,5 +1,6 @@
 package com.cavi.stocky.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 // DTO que mapea la respuesta JSON que devuelve la API de Open Meteo
@@ -20,7 +21,8 @@ public class ClimaResponseDto {
     private Double latitude;   // latitud de la ubicacion consultada
     private Double longitude;  // longitud de la ubicacion consultada
 
-    private CurrentWeather current_weather; // objeto con el clima actual, el nombre debe coincidir exactamente con el JSON
+    @JsonProperty("current_weather")
+    private CurrentWeather currentWeather;// objeto con el clima actual, el nombre debe coincidir exactamente con el JSON
 
     // clase interna que representa el bloque current_weather del JSON
     @Data
