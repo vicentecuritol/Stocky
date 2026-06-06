@@ -37,7 +37,7 @@ public class CategoriaService {
     // actualiza una categoria, verifica que exista antes de guardar
     public Categoria updateCategoria(Categoria categoria) {
         categoriaRepository.findById(categoria.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Categoria no enncontrada con id: " + categoria.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: " + categoria.getId()));
         return categoriaRepository.save(categoria);// si no existe devolvemos null y el controller responde 404
     }
 

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
-import java.util.stream.Collectors;
 // controller de proveedor, mismo patron que CategoriaController
 @RestController
 @RequestMapping("/api/v1/proveedores")
@@ -26,7 +25,7 @@ public class ProveedorController {
         List<Proveedor> proveedores = proveedorService.getProveedores();
         List<ProveedorResponseDto> respuestas = proveedores.stream()
                 .map(this::convertirAResponse)
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(respuestas);
     }
 

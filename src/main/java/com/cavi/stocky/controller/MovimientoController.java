@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
-import java.util.stream.Collectors;
 // controller de movimiento, maneja el historial de entradas y salidas de stock
 @RestController
 @RequestMapping("/api/v1/movimientos")
@@ -28,7 +27,7 @@ public class MovimientoController {
         List<Movimiento> movimientos = movimientoService.getMovimientos();
         List<MovimientoResponseDto> respuestas = movimientos.stream()
                 .map(this::convertirAResponse)
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(respuestas);
     }
 

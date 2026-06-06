@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 // controller de categoria, recibe peticiones HTTP en /api/v1/categorias
 @RestController // indica que esta clase maneja peticiones HTTP y devuelve JSON
 @RequestMapping("/api/v1/categorias") // URL base para todos los endpoints de esta clase
@@ -27,7 +26,7 @@ public class CategoriaController {
         List<Categoria> categorias = categoriaService.getCategorias();
         List<CategoriaResponseDto> respuestas = categorias.stream()
                 .map(this::convertirAResponse)// convierte cada Categoria a su DTO
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(respuestas); // responde 200 OK con la lista
 
     }

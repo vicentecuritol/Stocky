@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 import com.cavi.stocky.exception.ResourceNotFoundException;
 // controller de producto, el mas completo porque necesita categoria y proveedor al crear
 @RestController
@@ -33,7 +33,7 @@ public class ProductoController {
         List<Producto> productos = productoService.getProductos();
         List<ProductoResponseDto> respuestas = productos.stream()
                 .map(this::convertirAResponse)
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(respuestas);
     }
 
@@ -108,7 +108,7 @@ public class ProductoController {
     public ResponseEntity<List<ProductoResponseDto>> productosBajoStock() {
         List<ProductoResponseDto> bajoStock = productoService.getProductosBajoStock().stream()
                 .map(this::convertirAResponse)
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(bajoStock);
     }
 
