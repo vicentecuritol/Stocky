@@ -14,7 +14,7 @@ import com.cavi.stocky.repository.ProveedorRepository;
 @Service
 @AllArgsConstructor
 public class ProveedorService {
-    private ProveedorRepository proveedorRepository;
+    private final ProveedorRepository proveedorRepository;
 
     // retorna todos los proveedores registrados
     public List<Proveedor> getProveedores() {
@@ -27,7 +27,7 @@ public class ProveedorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado con id: " +id));
     }
 
-    // Guardar un nuevo proovedor  en la base de datos
+    // Guardar un nuevo proovedor en la base de datos
     public Proveedor saveProveedor(Proveedor proveedor) {
         return proveedorRepository.save(proveedor);
     }

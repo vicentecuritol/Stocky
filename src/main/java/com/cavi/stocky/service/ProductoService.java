@@ -13,8 +13,8 @@ import com.cavi.stocky.repository.ProductoRepository;
 @Service
 @AllArgsConstructor
 public class ProductoService {
-    private ProductoRepository productoRepository;
-    private MovimientoRepository movimientoRepository; // necesario para verificar movimientos antes de eliminar
+    private final ProductoRepository productoRepository;
+    private final MovimientoRepository movimientoRepository; // necesario para verificar movimientos antes de eliminar
 
     // retorna todos los productos del inventario
     public List<Producto> getProductos(){

@@ -15,8 +15,8 @@ import com.cavi.stocky.repository.ProductoRepository;
 @Service
 @AllArgsConstructor
 public class MovimientoService {
-    private MovimientoRepository movimientoRepository;
-    private ProductoRepository productoRepository; // inyección necesaria para actualizar el stock
+    private final MovimientoRepository movimientoRepository;
+    private final ProductoRepository productoRepository; // inyección necesaria para actualizar el stock
 
     // retorna todo el historial de movimientos
     public List<Movimiento> getMovimientos() {
