@@ -13,5 +13,7 @@ import com.cavi.stocky.model.Producto;
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     @Query("SELECT p FROM Producto p WHERE p.stockActual <= p.stockMinimo")
     List<Producto> obtenerProductosConStockBajo();
+    boolean existsByCategoriaId(Long categoriaId);
+
 
 }
