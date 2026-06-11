@@ -45,4 +45,5 @@ public class Producto {
     @NotNull(message = "El proveedor es obligatorio")
     private Proveedor proveedor;
 
-}
+
+    }
