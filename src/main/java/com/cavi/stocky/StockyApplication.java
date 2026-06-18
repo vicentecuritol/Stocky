@@ -1,8 +1,6 @@
 package com.cavi.stocky;
 
-
 import java.util.Arrays;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,7 +21,7 @@ public class StockyApplication {
 	}// enciende el servidor
 
 	//se definen carpetas a usar
-	@Pointcut("within(com.cavi.stocky.controller..*) || within(com.cavi.stocky.exception..*) || within(com.cavi.stocky.resource..*)")
+	@Pointcut("within(com.cavi.stocky.controller..*) || within(com.cavi.stocky.service..*)|| within(com.cavi.stocky.exception..*)")
 	public void applicationPackagePointcut(){}
 
 	//se interceptan metodos para entradas, salidas y errores
@@ -42,8 +40,9 @@ public class StockyApplication {
 				log.info("Saliendo de: {}.{}() | Resultado: {}", clase, metodo, resultado);
 				return resultado;
 			}catch(Throwable e){
-				//log si el metodo lanza excepcion
-				log.error("Error en: {}.{}() | Excepcion: {}",clase, metodo, e.getMessage());
+				//log si el metodo lanza excepcion (se pasa "e" al final para que
+    			//SLF4J imprima el stack trace completo, no solo el mensaje)
+				log.error("Error en: {}.{}() | Excepcion: {}",clase, metodo, e);
 				throw e; //lanza error original 
 			}
 	}
