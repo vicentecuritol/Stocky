@@ -29,7 +29,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: system
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      JWT_SECRET: Stocky-clave-secreta-jwt-2026-cambiar-en-produccion
+      JWT_SECRET: bD4kP9mX2nQ7rT1vY6wZ3aE8cF0hJ5sL2uI9oN4xG7jK1mB6pR3tW8yA5qC0eH
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: admin123
     ports:
       - "8080:8080"
     restart: unless-stopped
