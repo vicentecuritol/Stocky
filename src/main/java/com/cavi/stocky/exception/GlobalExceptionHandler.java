@@ -5,6 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+
+import com.cavi.stocky.StockyApplication;
+
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.validation.FieldError;
 import java.util.stream.Collectors;
@@ -40,6 +43,10 @@ public class GlobalExceptionHandler {
         String mensajes = ex.getBindingResult().getFieldErrors().stream()
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.joining(", "));
+
+        //se agrega log ya que AOP no lo marca como error
+        StockyApplication.log.warn("Validacion fallida en {} | Detalles: {}",
+                request.getDescription(false), mensajes);
 
         ApiError error = new ApiError(
                 LocalDateTime.now(),
